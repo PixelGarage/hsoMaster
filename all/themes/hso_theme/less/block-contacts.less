@@ -1,0 +1,153 @@
+/*
+ *  Contacts-block component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-contacts-block (@seg-color; @seg-color-hover; @link-color) {
+  background: @seg-color;
+
+  .content {
+    ul.header_links {
+      li {
+        a {
+          color: @link-color;
+          background: @seg-color-hover;
+
+          &.active {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+// General settings
+// -------------------------
+#block-views-contacts-block-segment-contacts,
+.block-views-contacts-block-course-contacts {
+  margin-bottom: 20px;
+  padding: 15px 20px;
+  font-size: @font-size-small;
+  color: #fff;
+
+  body.page-node-1289 &,
+  body.page-node-1428 & {
+    /* Specific page settings */
+    display: none;
+  }
+
+  h2.block-title {
+    font-family: @font-family-light;
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    ul.header_links {
+      #hso-mixins.no-list-style();
+      margin: 0 0 20px;
+
+      li {
+        display: inline;
+        #hso-mixins.no-list-style();
+
+        a {
+          display: inline-block;
+          margin: 0 4px 4px 0;
+          padding: 2px 15px;
+          font-family: @font-family-regular;
+          font-size: 14px;
+          line-height: 18px;
+          text-align: center;
+          text-decoration: none;
+
+          &.active {
+            font-family: @font-family-medium;
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    .view-content {
+      li.views-row {
+        overflow: hidden;
+        margin-bottom: 10px;
+        padding-left: 105px;
+
+        .views-field-title {
+          font-family: @font-family-regular;
+          font-size: 13px;
+        }
+
+        .views-field-field-picture {
+          margin-left: -105px;
+          float: left;
+        }
+
+        .views-field-field-phone,
+        a {
+          display: block;
+          margin-top: 5px;
+          padding-left: 25px;
+          line-height: 16px;
+          color: #fff;
+          text-decoration: none;
+
+          &:before {
+            content: ' ';
+            display: block;
+            float: left;
+            margin-left: -25px;
+            width: 25px;
+            height: 16px;
+            background: url(../images/contact_icons.png) no-repeat 0 0;
+          }
+        }
+
+        .views-field-field-email a {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 110px;
+
+          &:before {
+            background-position: 0 -16px;
+          }
+        }
+
+      }
+    }
+
+  }
+
+  // specific contact blocks
+  body.kvcollege_section & {
+    .specific-contacts-block (@hso-kv-college; @hso-kv-college-hover; #b4cb87);
+  }
+  body.hscollege_section & {
+    .specific-contacts-block (@hso-handelsschule; @hso-handelsschule-hover; #e4a27f);
+  }
+  body.kscollege_section & {
+    .specific-contacts-block (@hso-kaderschule; @hso-kaderschule-hover; #a5a0c0);
+  }
+  body.excollege_section & {
+    .specific-contacts-block (@hso-executive; @hso-executive-hover; #e7e5de);
+  }
+
+
+}
+
+
+
+
+

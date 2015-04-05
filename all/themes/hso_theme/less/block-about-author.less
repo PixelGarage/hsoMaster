@@ -1,0 +1,107 @@
+/*
+ *  About-author block Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-author-title(@seg-color) {
+  h2.block-title {
+    background-color: @seg-color;
+  }
+}
+
+
+// General settings
+// -------------------------
+#block-views-ber-den-autor-block {
+  margin-bottom: 20px;
+
+  h2.block-title {
+    padding: 15px 15px 15px 45px;
+    height: 20px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 20px;
+    border-bottom: 1px solid #fff;
+    background: @branding-bg url(../images/blog_icon.png) no-repeat 12px 18px;
+  }
+
+  .view {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+
+    & .view {
+      border: none;
+      padding: 0;
+    }
+
+    .view-header {
+      .user_profile {
+        padding-left: 100px;
+        width: 168px;
+
+        .user-picture {
+          margin-left: -104px;
+
+          img {
+            width: 90px;
+            height: auto;
+          }
+        }
+
+        .field-name-field-full-name {
+          font-size: 14px;
+
+          a {
+            text-decoration: none;
+            color: #202124;
+
+            &:hover {
+              color: #0062A0;
+            }
+          }
+        }
+      }
+    }
+
+    .view-content {
+      .views-field-created {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .views-field-title,
+      .views-field-title a {
+        font-size: 16px;
+        color: #000;
+        text-decoration: none;
+        line-height: 20px;
+      }
+
+      .views-field-body {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // specific author titles
+  body.kvcollege_section & {
+    .specific-author-title(@hso-kv-college);
+  }
+  body.hscollege_section & {
+    .specific-author-title(@hso-handelsschule);
+  }
+  body.kscollege_section & {
+    .specific-author-title(@hso-kaderschule);
+  }
+  body.excollege_section & {
+    .specific-author-title(@hso-executive);
+  }
+}
+
+

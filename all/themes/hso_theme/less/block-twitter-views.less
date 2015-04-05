@@ -1,0 +1,141 @@
+/*
+ *  Twitter views-block component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+#block-views-tweets-witercho-block {
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: @font-family-light;
+  font-size: 22px;
+  color: #fff;
+  background: #a3a3a3 url(../images/tw.png) no-repeat 260px 22px;
+
+  h2.block-title {
+    margin-bottom: 20px;
+
+    strong {
+      font-family: @font-family-bold;
+    }
+  }
+
+  .content {
+    .view-tweets {
+      position:relative;
+      margin-top: 20px;
+      font-family: @font-family-regular;
+      font-size: @font-size-small;
+      color: #fff;
+
+      .witerchoBlockFieldDate,
+      .attachBlockFieldDate {
+        position:absolute;
+        top:27px;
+        right:0;
+      }
+
+      .witerchoBlockFieldName,
+      .attachBlockFieldName {
+        margin-left:10px;
+        font-family: @font-family-bold;
+      }
+
+      .witerchoBlockFieldMessage,
+      .attachBlockFieldMessage {
+        margin-top:20px;
+        font-family: @font-family-light;
+        font-size: small;
+      }
+
+      a,
+      a:link {
+        color: #fff;
+
+        &:hover,
+        &:visited {
+          color: #ddd;
+        }
+      }
+    }
+  }
+}
+body.responsive-layout-mobile.front {
+  #block-views-tweets-witercho-block {
+    float: left;
+    width: 260px;
+  }
+}
+
+
+// Executive twitter block settings
+// -------------------------
+#block-views-tweets-executive-block {
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: @font-family-light;
+  font-size: 22px;
+  color: #fff;
+  background: #b1a895 url(../images/tw.png) no-repeat 260px 22px;
+
+  h2.block-title {
+    margin-bottom: 20px;
+
+    strong {
+      font-family: @font-family-bold;
+    }
+  }
+
+  .content {
+    .view-tweets {
+      position:relative;
+      margin-top: 20px;
+      font-family: @font-family-regular;
+      font-size: @font-size-small;
+      color: #fff;
+
+      .views-field-screen-name {
+        display:inline;
+      }
+
+      .executiveBlockFieldDate {
+        float:right;
+        font-family: @font-family-light;
+        font-size: small;
+      }
+
+      .executiveBlockFieldLoginName {
+        font-family: @font-family-regular;
+        font-size: small;
+      }
+
+      .executiveBlockFieldMessage {
+        margin-bottom:20px;
+        font-family: @font-family-light;
+        font-size: small;
+      }
+
+      a,
+      a:link {
+        color: #fff;
+
+        &:hover,
+        &:visited {
+          color: #ddd;
+        }
+      }
+    }
+  }
+}
+
+
+

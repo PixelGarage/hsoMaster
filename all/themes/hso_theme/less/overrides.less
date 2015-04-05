@@ -1,0 +1,260 @@
+/*
+ *  Overrides of
+ * --------------------------------------------------*/
+// Variables
+// -------------------------
+@margin-large-bottom:       10px;
+
+// Mixins
+// -------------------------
+.heading-base(@font-family: @font-family-medium, @font-size: @font-size-base) {
+  margin-bottom: @margin-large-bottom;
+  font-family: @font-family;
+  font-size: @font-size;
+  letter-spacing: 0;
+  font-weight: normal;
+}
+
+
+// General settings
+// -------------------------
+html {
+  -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
+}
+html.js #block-menu-block-1 div.contextual-links-wrapper {
+  display: none;
+}
+
+body {
+  font-family: @font-family-light;
+  font-size: @font-size-base;
+  color: @gray-base;
+}
+body.page-blog,
+body.page-taxonomy-term {
+  h1#page-title { display: none; }
+}
+body.node-type-page #region-content.grid-12 .node.node-page {
+  width: 620px;
+}
+
+body.responsive-layout-mobile {
+  .container-12 .grid-8#region-content,
+  .container-12 .grid-8#region-preface-first {
+    width: 610px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+body.responsive-layout-narrow {
+  .container-12 .grid-8#region-content,
+  .container-12 .grid-8#region-preface-first {
+    clear: both;
+    width: 610px;
+    margin-left: 55px;
+  }
+}
+
+
+#page {
+  min-width: 640px;
+  border-top: 4px solid @branding-bg;
+}
+body.kvcollege_section #page{
+  border-top-color: @hso-kv-college;
+}
+body.hscollege_section #page {
+  border-top-color: @hso-handelsschule;
+}
+body.kscollege_section #page {
+  border-top-color: @hso-kaderschule;
+}
+body.excollege_section #page {
+  border-top-color: @hso-executive;
+}
+
+#section-content {
+  position: relative;
+  padding-top: 25px;
+  z-index: 2;
+}
+
+body.responsive-layout-narrow {
+  #region-sidebar-second {
+    clear: both;
+    width: 610px;
+    margin-left: 55px;
+  }
+
+  &.front #region-sidebar-second {
+    display: none;
+  }
+}
+
+
+p, dl, hr, ol, ul, pre, table, address, fieldset {
+  margin-bottom: @margin-large-bottom;
+  font-size: @font-size-base;
+}
+
+b, strong {
+  font-family: @font-family-regular;
+  font-weight: normal;
+}
+
+h1 {
+  .heading-base(@font-family-medium, @font-size-h1);
+
+  #page-title{
+    font-size: @font-size-h1;
+  }
+}
+h2 {
+  .heading-base(@font-family-medium, @font-size-h2);
+
+  &.red {
+    font-size: 22px;
+    color: #e40421;
+  }
+}
+h3 {
+  .heading-base(@font-family-light, @font-size-h3);
+}
+h4, h5, h6 {
+  .heading-base(@font-family-light);
+}
+
+// specific items
+#messages {
+  position: relative;
+  z-index: 10;
+}
+
+.view .item-list li {
+  margin: 0;
+}
+
+/*
+.node-segment-sidebar-block .content a.person,
+.node-segment-sidebar-block .content a.bildungsnavigator {
+	color: #fff;
+	text-decoration: none;
+	font-size: 14px;
+	display: block;
+	padding-left: 30px;
+	line-height: 25px;
+	background: url(../images/wo_befindest_icons.png) no-repeat 0 0;
+}
+.node-segment-sidebar-block .content a.person {
+	background-position: 0 -25px;
+}
+.node-segment-sidebar-block .content a.person,
+.node-segment-sidebar-block .content a.bildungsnavigator {
+	background-position: 10px 0;
+	padding-left: 40px;
+}
+.node-segment-sidebar-block .content a.person {
+	background-position: 10px -25px;
+}
+.node-segment-sidebar-block {
+    margin-bottom: 20px;
+}
+.node-segment-sidebar-block .content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    padding-bottom: 0;
+}
+.node-segment-sidebar-block .content .content {
+    padding: 0;
+    border: none;
+}
+.node-segment-sidebar-block header {
+    background: #e40421 url(../images/logo_sidebar.png) no-repeat 10px 4px;
+    padding: 10px 20px;
+    padding-left: 55px;
+}
+.node-segment-sidebar-block header h2.node-title {
+    color: #fff;
+    font-size: 17px;
+    margin: 0;
+}
+.node-segment-sidebar-block .content {
+    font-size: 12px;
+}
+.node-segment-sidebar-block .content h3 {
+    font-size: 15px;
+    font-family: 'Soho Gothic W01 Medium';
+    color: #6e6e6e;
+}
+.node-segment-sidebar-block .content a {
+    display: block;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 10px;
+    text-decoration: none;
+    background-color: #f49ba6;
+    color: #000;
+}
+.node-segment-sidebar-block .content a.person,
+.node-segment-sidebar-block .content a.bildungsnavigator,
+.node-segment-sidebar-block .content a:hover {
+    background-color: #e40421;
+}
+strong.segment_1 { color: #94BA40; }
+strong.segment_2, strong.segment_5 { color: #E77431; }
+strong.segment_3 { color: #78729E; }
+strong.segment_4 { color: #B1A896; }
+
+body.kvcollege_section .node-segment-sidebar-block header {
+    background-color: #94ba40;
+}
+body.kvcollege_section .node-segment-sidebar-block .content a {
+    background-color: #e5edc4;
+}
+body.kvcollege_section .node-segment-sidebar-block .content a.person,
+body.kvcollege_section .node-segment-sidebar-block .content a.bildungsnavigator,
+body.kvcollege_section .node-segment-sidebar-block .content a:hover {
+    background-color: #94ba40;
+}
+
+body.hscollege_section .node-segment-sidebar-block header {
+    background-color: #e77431;
+}
+body.hscollege_section .node-segment-sidebar-block .content a {
+    background: #fae4d7;
+}
+body.hscollege_section .node-segment-sidebar-block .content a.person,
+body.hscollege_section .node-segment-sidebar-block .content a.bildungsnavigator,
+body.hscollege_section .node-segment-sidebar-block .content a:hover {
+    background-color: #e77431;
+}
+
+body.kscollege_section .node-segment-sidebar-block header {
+    background-color: #78729e;
+}
+body.kscollege_section .node-segment-sidebar-block .content a {
+    background: #e6e4ef;
+}
+body.kscollege_section .node-segment-sidebar-block .content a.person,
+body.kscollege_section .node-segment-sidebar-block .content a.bildungsnavigator,
+body.kscollege_section .node-segment-sidebar-block .content a:hover {
+    background-color: #78729e;
+}
+
+body.excollege_section .node-segment-sidebar-block header {
+    background-color: #b1a895;
+}
+body.excollege_section .node-segment-sidebar-block .content a {
+    background: #e7e5de;
+}
+body.excollege_section .node-segment-sidebar-block .content a.person,
+body.excollege_section .node-segment-sidebar-block .content a.bildungsnavigator,
+body.excollege_section .node-segment-sidebar-block .content a:hover {
+    background-color: #b1a895;
+}
+
+
+
+*/
+

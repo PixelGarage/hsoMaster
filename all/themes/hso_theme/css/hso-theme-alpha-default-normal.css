@@ -1,0 +1,45 @@
+/* This file will hold styles that are loaded using the same media query as the normal grid. */
+/* If you are using the default media queries provided by Omega, these styles will also
+ *  apply to the widescreen layout unless they are overridden by the widescreen styles. */
+
+.container-12 .grid-8#region-content {
+	width: 610px;
+	margin-right: 20px;
+}
+#tag_cloud_wrapper {
+	display: block;
+}
+.pane-blog-panel-pane-1, .pane-blog-panel-pane-2 {
+	float: left;
+	width: 380px;
+}
+.pane-blog-panel-pane-1 {
+  margin-right: 30px;
+  width: 530px;
+}
+.view-display-id-panel_pane_2 .node.node-news .field-name-field-picture {
+	display: block;
+}
+.node.node-location .map_details {
+	display: block;
+}
+.node.node-location .map_details_mobile {
+	display: none;
+}
+.node.node-location .picture_address {
+  width: 340px;
+}
+.pane-views-panes.pane-centers-panel-pane-1 .item-list ul li.views-row a,
+#block-menu-block-5 ul.menu li a {
+	font-size: 14px;
+}
+body.page_center #block-menu-block-5 {
+	margin-right: -330px;
+}
+body.into_die_hso #region-sidebar-second {
+	margin-top: 130px;
+}
+.pane-views-panes.pane-centers-panel-pane-1,
+#block-menu-block-5 {
+	padding-left: 20px;
+}

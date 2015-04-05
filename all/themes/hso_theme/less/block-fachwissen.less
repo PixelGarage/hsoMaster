@@ -1,0 +1,80 @@
+/*
+ *  Fachwissen block Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-fachwissen-block (@bg-color; @bg-image;) {
+  h2.block-title {
+    background: @bg-color @bg-image no-repeat 0 0;
+  }
+}
+
+
+// General settings
+// -------------------------
+#block-views-fachwissen-block {
+  margin-bottom: 20px;
+
+  h2.block-title {
+    padding: 15px 15px 15px 45px;
+    height: 20px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 20px;
+    border-bottom: 1px solid #fff;
+    background: @branding-bg url(../images/blog_icon.png) no-repeat 12px 18px;
+  }
+
+  .view {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+
+    ul.header_links {
+      #hso-mixins.list-header-link-buttons();
+    }
+
+    .view-content {
+      .views-field-field-icon img {
+        margin-right: 5px;
+      }
+
+      .views-field-field-link {
+        line-height: 22px;
+
+        a {
+          font-family: @font-family-medium;
+          font-size: @font-size-small;
+          color: #6e6e6e;
+          text-decoration: none;
+        }
+      }
+
+      .views-field-field-date {
+        font-family: @font-family-regular;
+        font-size: 11px;
+        color: #6e6e6e;
+      }
+    }
+  }
+
+  // specific segment settings
+  body.kvcollege_section & {
+    .specific-fachwissen-block(#e4edc4; url(../images/kv_fachwissen.png););
+  }
+  body.hscollege_section & {
+    .specific-fachwissen-block(#fae4d7; url(../images/hs_fachwissen.png););
+  }
+  body.kscollege_section & {
+    .specific-fachwissen-block(#e6e4ef; url(../images/ks_fachwissen.png););
+  }
+  body.excollege_section & {
+    .specific-fachwissen-block(#e7e5de; url(../images/ex_fachwissen.png););
+  }
+}
+

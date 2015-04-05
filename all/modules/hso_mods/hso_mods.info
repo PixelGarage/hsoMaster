@@ -1,0 +1,5 @@
+name = "HSO Customizations"
+description = "HSO Customizations"
+package = "HSO"
+core = "7.x"
+version = "1.0"

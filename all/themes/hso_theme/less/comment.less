@@ -1,0 +1,90 @@
+/*
+ *  Comment component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+article.comment {
+  padding-left: 55px;
+
+  header {
+    display: none;
+  }
+
+  .user-picture {
+    float: left;
+    margin-left: -55px;
+
+    img {
+      width: 40px;
+      height: auto;
+      #hso-mixins.border-radius(5px);
+    }
+  }
+
+  .field-name-comment-body {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+
+  .comment-links {
+    text-align: right;
+    margin: 10px 0;
+    font-size: 13px;
+
+    a {
+      color: @branding-bg;
+    }
+  }
+
+  footer {
+    padding: 10px;
+    font-size: 12px;
+    color: #aaa;
+    border: 1px solid #e1e1e1;
+    background: #f6f6f6;
+
+    .author {
+      display: inline-block;
+      padding-right: 10px;
+      font-size: 13px;
+      color: #000;
+    }
+  }
+}
+
+.comment-form {
+  input.form-text,
+  textarea {
+    width: 80%;
+    border: 1px solid #bababa;
+    background: #fff;
+  }
+  input.form-text {
+    height: 22px;
+  }
+  .resizable-textarea .grippie {
+    display: none;
+  }
+
+  .form-submit {
+    margin: 10px 0;
+    padding: 0 20px;
+    height: 35px;
+    font-family: @font-family-regular;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    background: #6e6e6e;
+  }
+}
+

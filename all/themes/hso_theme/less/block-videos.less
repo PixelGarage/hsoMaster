@@ -1,0 +1,54 @@
+/*
+ *  Video-block component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-block-title (@seg-color) {
+  h2.block-title {
+    background: @seg-color;
+  }
+}
+
+
+// General settings
+// -------------------------
+#block-views-videos-block-1 {
+  margin-bottom: 20px;
+
+  h2.block-title {
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 17px;
+    background: #e40421;
+  }
+
+  .content {
+    padding: 20px 20px 0;
+    border: 1px solid #ddd;
+
+    & .node-video.node-teaser .content {
+      padding: 0;
+      border: none;
+    }
+  }
+
+  // specific block titles
+  body.kvcollege_section & {
+    .specific-block-title (@hso-kv-college);
+  }
+  body.hscollege_section & {
+    .specific-block-title (@hso-handelsschule);
+  }
+  body.kscollege_section & {
+    .specific-block-title (@hso-kaderschule);
+  }
+  body.excollege_section & {
+    .specific-block-title (@hso-executive);
+  }
+
+}

@@ -1,0 +1,153 @@
+/*
+ *  Search course times page Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+// Mixins
+// -------------------------
+
+
+// Search view settings
+// -------------------------
+.view-course-times-search {
+  .view-filters {
+    /* filter styling */
+    .views-exposed-form {
+      .views-exposed-widget {
+        margin: 0 20px 20px 0;
+        padding: 0;
+      }
+
+      .form-item-title input,
+      .form-item-field-address-locality input {
+        margin-top: 1px;
+        width: 230px;
+        font-family: @font-family-light;
+        font-size: 14px;
+        border: 1px solid #DBDBDB;
+        background: none repeat scroll 0 0 #FFFFFF;
+      }
+
+      #edit-field-segment-tid-1,
+      .form-item-field-course-date-value-value select {
+        padding: 0 5px;
+        width: 80px;
+        height: 21px;
+        font-family: @font-family-light;
+        font-size: 14px;
+        border: 1px solid #dbdbdb;
+        background: #fff;
+      }
+      #edit-field-segment-tid-1 {
+        width: 125px;
+      }
+
+      .views-submit-button input,
+      .views-reset-button input {
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+        padding: 5px 10px;
+        font-family: @font-family-regular;
+        font-size: 16px;
+        color: #fff;
+        line-height: 25px;
+        text-decoration: none;
+        vertical-align: middle;
+        border: none;
+        background: @branding-bg;
+      }
+    }
+  }
+
+  .view-content {
+    table {
+      width: 100%;
+
+      thead {
+        th {
+          border-bottom:4px solid @branding-bg;
+          font-family: @font-family-medium;
+          font-size: 14px;
+          padding: 5px 10px 5px 5px;
+
+          a {
+            color: #000;
+
+            &:hover{
+              color: @branding-bg;
+            }
+
+          }
+        }
+        th.views-field-segment {
+          width: 20%;
+        }
+        th.views-field-course {
+          width: 35%;
+        }
+        th.views-field-body {
+          width: 25%;
+        }
+        th.views-field-field-location {
+          width: 10%;
+        }
+        th.views-field-nothing {
+          width: 10%;
+        }
+      }
+
+      tbody {
+        tr.even {
+          background-color: #efefef;
+        }
+
+        tr.odd {
+          background-color: #dfdfdf;
+        }
+
+        td {
+          font-size: 13px;
+          padding: 5px;
+
+          a {
+            color: #000;
+            font-family: @font-family-regular;
+
+            &:hover{
+              color: @branding-bg;
+            }
+          }
+        }
+        td.views-field-nothing {
+          vertical-align: middle;
+
+          a {
+            display: inline-block;
+            padding: 0 10px;
+            line-height: 25px;
+            color: #fff;
+            text-decoration: none;
+            background: @branding-bg;
+          }
+        }
+        td.views-field-field-location {
+          text-align: center;
+        }
+        td.views-field-field-course-date {
+          white-space: nowrap;
+          line-height: 25px;
+        }
+      }
+    }
+
+  }
+
+  .item-list {
+    /* view pager*/
+    #hso-mixins.views-pager();
+  }
+}
+

@@ -1,0 +1,55 @@
+/*
+ *  Words cloud block component (sidebar)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+.word-cloud(@seg-color: #E40421; @seg-hover: #ef6d7e) {
+  .field-name-body {
+    span,
+    a,
+    a:visited,
+    a:active {
+      color: @seg-color;
+      text-decoration: none;
+
+      &:hover {
+        color: @seg-hover;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// General settings
+// -------------------------
+/* KV College */
+.word-cloud-block {
+  .word-cloud();
+}
+
+/* KV College */
+#block-nodeblock-4579  {
+  .word-cloud(#94ba40, #89ab3b);
+}
+/* Handelsschule */
+#block-nodeblock-4580 {
+  .word-cloud(#e77431, #d76b2d);
+}
+
+/* Kaderschule */
+#block-nodeblock-4426 {
+  .word-cloud(#78729e, #a5a0c0);
+}
+
+/* Executive */
+#block-nodeblock-4581 {
+  .word-cloud(#b1a896, #a39b88);
+}
+
+

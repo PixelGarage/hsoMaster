@@ -1,0 +1,66 @@
+/*
+ *  Witercho blog tabs pane
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+.pane-views-panes.pane-centers-panel-pane-1 {
+  clear: both;
+  padding-left: 5px;
+  margin-bottom: 30px;
+  background: url(../images/hso_bg_tabs.jpg) no-repeat 0 20px;
+
+  .item-list {
+    ul {
+      #hso-mixins.no-list-style;
+
+      li.views-row {
+        #hso-mixins.no-list-style;
+        float: left;
+        margin: 0;
+        padding: 0;
+        #hso-mixins.border-radius-top-left(4px);
+        #hso-mixins.border-radius-top-right(4px);
+        border: 1px solid #d3d2ce;
+        background: @branding-bg;
+
+        &:hover,
+        &.active {
+          border-bottom: 1px solid #fff;
+          background: #fff;
+
+          a {
+            color: @branding-bg;
+          }
+        }
+
+        a {
+          display: inline-block;
+          padding: 13px 10px 14px;
+          vertical-align: middle;
+          font-family: @font-family-regular;
+          font-size: @font-size-small;
+          color: #fff;
+          line-height: 22px;
+          text-decoration: none;
+        }
+
+        .views-field-field-icon a {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,159 @@
+/*
+ *  Witercho blog view, news content types
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// News node preface / sidebar
+// -------------------------
+#region-preface-first {
+  .block-hso-mods {
+    #hso-mixins.hso-blog-post-pager();
+  }
+}
+
+body.node-type-news {
+  h1#page-title {
+    width: 510px;
+  }
+
+  #region-sidebar-second {
+    margin-top: 0;
+
+    @media @normal {
+      margin-top: -50px;
+    }
+  }
+}
+
+
+// News node settings
+// -------------------------
+body.node-type-news .node.node-news {
+  .with_picture {
+    .content {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ecebeb;
+
+      .field .field-label {
+        font-family: @font-family-medium;
+        font-weight: normal;
+      }
+
+      .field-name-body {
+        margin: 20px 0;
+        font-size: 14px;
+      }
+
+      .field-label-inline {
+        .field-label {
+          float: none;
+        }
+
+        .field-items {
+          float: none;
+
+          .field-item {
+            a {
+              display: inline-block;
+              margin-right: 4px;
+              margin-bottom: 5px;
+              padding: 0 15px;
+              font-size: @font-size-small;
+              color: #000;
+              line-height: 23px;
+              text-decoration: none;
+              background: #dfdfdf;
+
+              &:hover {
+                color: #fff;
+                background: #6e6e6e;
+              }
+            }
+          }
+        }
+      }
+
+      .sharethis-buttons {
+        margin: 20px 0;
+      }
+
+    }
+    .block-hso-mods {
+      #hso-mixins.hso-blog-post-pager();
+    }
+  }
+}
+
+
+// News teaser node settings
+// -------------------------
+.node.node-news.node-teaser {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ecebeb;
+
+  .with_picture {
+    padding-left: 210px;
+
+    h2.node-title {
+      font-size: 17px;
+      color: #000;
+      text-decoration: none;
+
+      a {
+        font-size: 17px;
+        color: #000;
+        text-decoration: none;
+      }
+
+    }
+
+    .submitted {
+      font-size: 12px;
+      color: #949191;
+    }
+
+    .field-name-field-picture {
+      margin-left: -210px;
+      float: left;
+    }
+
+    .content .center_icons {
+      margin-top: 10px;
+
+      div {
+        display: inline;
+      }
+
+      img {
+        margin-right: 10px;
+      }
+    }
+
+    .node-links {
+      text-align: right;
+      margin: 10px 0;
+      font-size: 13px;
+
+      a {
+        color: @branding-bg;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+

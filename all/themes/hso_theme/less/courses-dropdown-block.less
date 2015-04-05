@@ -1,0 +1,153 @@
+/*
+ *  Courses dropdown view Component (course page)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-courses-view(@seg-color; @seg-color-hover) {
+  .view-content {
+    ul {
+      background: @seg-color;
+
+      li.views-row:hover {
+        background: @seg-color-hover;
+      }
+    }
+  }
+}
+
+.specific-anmelde-button(@bg-image) {
+  a.anmelden_button {
+    background-image: @bg-image;
+  }
+}
+
+
+// Dropdown settings settings
+// -------------------------
+#block-views-courses-block {
+  position: relative;
+  margin: 20px 0;
+  font-family: @font-family-regular;
+  font-size: 14px;
+  z-index: 5;
+
+  .view-content {
+    position: relative;
+    height: 30px;
+    float: left;
+
+    ul {
+      #hso-mixins.no-list-style();
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      height: 30px;
+      min-width: 210px;
+      z-index: 4;
+
+      &:hover {
+        height: auto;
+      }
+
+      li {
+        #hso-mixins.no-list-style();
+        padding: 0 15px;
+        line-height: 30px;
+
+        &.selector {
+          cursor: pointer;
+          padding: 0 15px;
+          border-bottom: 1px solid #fff;
+
+          .arrow_wrapper {
+            display: block;
+            float: right;
+            margin-right: -15px;
+            width: 30px;
+            height: 30px;
+            border-left: 1px solid #fff;
+
+            .arrow {
+              display: block;
+              height: 1px;
+              width: 1px;
+              margin-left: 9px;
+              margin-top: 12px;
+              border-top: 5px solid #fff;
+              border-left: 5px solid transparent;
+              border-right: 5px solid transparent;
+            }
+          }
+        }
+
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  // specific courses view
+  body.kvcollege_section & {
+    .specific-courses-view(@hso-kv-college; @hso-kv-college-hover);
+  }
+  body.hscollege_section & {
+    .specific-courses-view(@hso-handelsschule; @hso-handelsschule-hover);
+  }
+  body.kscollege_section & {
+    .specific-courses-view(@hso-kaderschule; @hso-kaderschule-hover);
+  }
+  body.excollege_section & {
+    .specific-courses-view(@hso-executive; @hso-executive-hover);
+  }
+
+}
+
+// Anmelde-button settings (block-block-3)
+// ---------------------------------------
+#block-block-3 {
+  position: relative;
+  margin-top: -65px;
+  margin-bottom: -38px;
+  text-align: right;
+  z-index: 4;
+
+  a.anmelden_button {
+    display: inline-block;
+    padding-top: 40px;
+    width: 103px;
+    height: 63px;
+    font-family: @font-family-medium;
+    font-size: @font-size-small;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: url(../images/kv_anmelden.png) no-repeat;
+  }
+
+  // specific buttons
+  body.kvcollege_section & {
+    .specific-anmelde-button(url(../images/kv_anmelden.png));
+  }
+  body.hscollege_section & {
+    .specific-anmelde-button(url(../images/hs_anmelden.png));
+  }
+  body.kscollege_section & {
+    .specific-anmelde-button(url(../images/ks_anmelden.png));
+  }
+  body.excollege_section & {
+    .specific-anmelde-button(url(../images/ex_anmelden.png));
+  }
+
+}
+
+
+
+

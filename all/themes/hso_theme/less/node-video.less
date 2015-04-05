@@ -1,0 +1,80 @@
+/*
+ * Video node component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+// General node settings
+// -------------------------
+.node.node-video {
+  .video_thumb {
+    position: relative;
+    float: left;
+    margin-left: -130px;
+    width: 120px;
+
+    .field-name-field-duration {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 2px 5px;
+      color: #fff;
+      font-size: 11px;
+      background: #000;
+    }
+
+  }
+
+}
+
+// Full node settings
+// -------------------------
+.node.node-video .full_view {
+  .field-name-field-views {
+    float: right;
+    margin-bottom: 20px;
+    vertical-align: bottom;
+    font-family: @font-family-bold;
+    font-size: 30px;
+    color: @branding-bg;
+
+    span {
+      color: #000;
+      font-family: @font-family-light;
+      font-size: 20px;
+    }
+  }
+
+  .field-name-body {
+    margin-bottom: 20px;
+    font-size: 14px;
+    clear: both;
+  }
+
+  .sharethis-buttons {
+    float: left;
+    margin-top: 10px;
+  }
+}
+
+// Teaser node settings
+// -------------------------
+.node.node-video.node-teaser {
+  margin-bottom: 20px;
+  padding-left: 130px;
+  font-size: @font-size-small;
+  color: #6e6e6e;
+
+  h2.node-title,
+  h2.node-title a {
+    font-size: 13px;
+    color: #000;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,207 @@
+/*
+ *  Scrolling course tabs block Component (course page bottom)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-course-tabs (@seg-color; @tabs-bg-image; @button-image; @odd-color; @even-color) {
+  // add scrollable tab view
+  #hso-mixins.specific-scrollable-tab-view(@seg-color; @tabs-bg-image);
+
+  .ui-tabs-panel {
+    .anmelden_wrapper {
+      .anmelden_button {
+        background: @button-image no-repeat;
+      }
+    }
+  }
+
+  #programm {
+    table.lektionplan {
+      tr {
+        th {
+          border-bottom: 4px solid @seg-color;
+        }
+
+        td {
+          border-bottom: 1px solid @seg-color;
+        }
+      }
+    }
+  }
+
+  #startdaten {
+    .view-course-times table {
+      thead {
+        th {
+          border-bottom: 4px solid @seg-color;
+        }
+      }
+
+      tbody {
+        tr {
+          &.odd {
+            background: @odd-color;
+          }
+          &.even {
+            background: @even-color;
+          }
+
+          .views-field-nothing {
+            a {
+              background: @seg-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// General settings
+// -------------------------
+.view-course-tabs {
+  // add scrollable tab view
+  #hso-mixins.scrollable-tab-view();
+
+  .ui-tabs-panel {
+    padding: 0;
+    #hso-mixins.border-radius();
+    border: none;
+    background: transparent;
+
+    .node,
+    .view {
+      width: 568px;
+      padding: 20px;
+      font-family: @font-family-light;
+      font-size: 14px;
+      color: #000;
+      border: 1px solid #d4d3d0;
+      border-top: none;
+    }
+    .view {
+      margin-bottom: 20px;
+    }
+
+    .anmelden_wrapper {
+      text-align: center;
+
+      .anmelden_button {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding-top: 15px;
+        width: 221px;
+        height: 61px;
+        font-family: @font-family-medium;
+        font-size: @font-size-large;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  // Programm tab
+  #programm {
+    table.lektionplan {
+      tr {
+        th,
+        strong {
+          font-family: @font-family-medium;
+          font-size: 14px;
+        }
+
+
+        td {
+          padding: 5px 0;
+        }
+
+        &:last-child{
+          td {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+
+
+  // Startdaten tab
+  #startdaten {
+    .view-course-times {
+      table {
+        width: 100%;
+
+        thead {
+          th {
+            padding: 5px;
+            font-family: @font-family-medium;
+            font-size: 14px;
+          }
+        }
+
+        tbody {
+          tr {
+            border: none;
+            padding: 0;
+            background: #ecf2dc;
+
+            td {
+              font-size: 13px;
+              padding: 5px;
+
+              a {
+                color: #000;
+                font-family: @font-family-regular;
+              }
+            }
+
+            .views-field-nothing {
+              vertical-align: middle;
+
+              a {
+                display: inline-block;
+                padding: 0 10px;
+                line-height: 25px;
+                color: #fff;
+                text-decoration: none;
+              }
+            }
+
+            .views-field-field-location {
+              text-align: center;
+            }
+
+            .views-field-field-course-date {
+              white-space: nowrap;
+              line-height: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // specific intro pane settings
+  body.kvcollege_section & {
+    .specific-course-tabs(@hso-kv-college; url(../images/kv_bg_tabs.jpg); url(../images/kv_anmelden_2.png); #dfeac5; #ecf2dc);
+  }
+  body.hscollege_section & {
+    .specific-course-tabs(@hso-handelsschule; url(../images/hs_bg_tabs.jpg); url(../images/hs_anmelden_2.png); #ffdbb7; #ffe8d3);
+  }
+  body.kscollege_section & {
+    .specific-course-tabs(@hso-kaderschule; url(../images/ks_bg_tabs.jpg); url(../images/ks_anmelden_2.png); #dfd4e7; #ebe4f1);
+  }
+  body.excollege_section & {
+    .specific-course-tabs(@hso-executive; url(../images/ex_bg_tabs.jpg); url(../images/ex_anmelden_2.png); #dfdfdf; #efefef);
+  }
+
+}
+

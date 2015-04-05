@@ -1,0 +1,19 @@
+diff --git a/context_menu_block.module b/context_menu_block.module
+index e030226..c112c51 100644
+--- a/context_menu_block.module
++++ b/context_menu_block.module
+@@ -124,9 +124,11 @@ function context_menu_tree_add_active_path(&$tree, $active_paths) {
+
+   foreach (array_keys($tree) as $key) {
+ 	foreach($active_paths as $active_path) {
+-		if (!empty($tree[$key]['link']['href']) &&
+-			in_array($tree[$key]['link']['menu_name'] . ":" . $tree[$key]['link']['href'], $active_path) &&
+-			!$tree[$key]['link']['hidden']) {
++		if (!empty($tree[$key]['link']['href']) && !$tree[$key]['link']['hidden'] &&
++      (
++        ( is_array($active_path) && in_array($tree[$key]['link']['menu_name'] . ":" . $tree[$key]['link']['href'], $active_path) ) ||
++        ( is_string($active_path) && $tree[$key]['link']['href'] == $active_path )
++      )) {
+ 		  // Set the active trail.
+ 		  $tree[$key]['link']['in_active_trail'] = TRUE;
+

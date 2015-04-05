@@ -1,0 +1,130 @@
+/*
+ *  HSO-TV view Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+// Exposed form pane settings
+// -------------------------
+form#views-exposed-form-videos-panel-pane-1 {
+  .views-exposed-form {
+    .views-exposed-widget {
+      margin: 0;
+      padding: 0;
+
+      input.form-text {
+        width: 478px;
+        height: 30px;
+        padding: 0 10px;
+        font-family: @font-family-light;
+        font-size: 14px;
+        border: 1px solid #d5d5d5;
+        background: #fff;
+      }
+
+      input.form-submit {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        height: 32px;
+        width: 110px;
+        font-family: @font-family-regular;
+        font-size: 14px;
+        color: #000;
+        border: none;
+        background: #d5d5d5 url(../images/search.png) no-repeat 10px 11px;
+      }
+
+    }
+  }
+}
+
+
+// View pane-1 settings
+// -------------------------
+.pane-videos-panel-pane-1 {
+  .pane-title {
+    position: relative;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-family: @font-family-light;
+    font-size: 20px;
+    line-height: 30px;
+    background: #e3e3e3;
+
+    span.arrow {
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 9px solid #E3E3E3;
+      left: 75px;
+      position: absolute;
+      top: 50px;
+    }
+  }
+
+  .view.view-id-videos {
+    .view-header .view-playlists {
+      #hso-mixins.list-header-link-buttons();
+
+      ul li.views-row,
+      ul li.views-row div {
+        float: none;
+        display: inline;
+        width: auto;
+        float: none;
+        clear: none;
+        margin: 0;
+      }
+    }
+
+    .view-content {
+      .views-row {
+        float: left;
+        margin-left: 10px;
+        width: 295px;
+
+        &.views-row-odd {
+          clear: both;
+          margin-left: 0;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    // view pager
+    .item-list {
+      #hso-mixins.views-pager();
+    }
+  }
+}
+
+
+// View pane-2 settings
+// -------------------------
+.pane-videos-panel-pane-2 {
+  margin: 20px 0 35px;
+
+  .pane-title {
+    font-family: @font-family-regular;
+    font-size: 28px;
+  }
+
+  .views-row {
+    float: left;
+
+    img {
+      border: 2px solid #e3e3e3;
+    }
+
+    &.views-row-even {
+      float: right;
+    }
+  }
+}
+

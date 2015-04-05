@@ -1,0 +1,189 @@
+/*
+ *  Footer block components
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+@fb-border-color: #e3e3e3;
+
+
+// Mixins
+// -------------------------
+.fb-address-field(@pos-x: 0, @pos-y: 0, @img: url(../images/contact_icons.jpg)) {
+  display: block;
+  padding-left: 22px;
+  line-height: 20px;
+  background: @img no-repeat @pos-x @pos-y;
+}
+.fb-button(@bg-color: #6e6e6e) {
+  display: block;
+  margin: 0 auto;
+  padding: 5px 10px;
+  font-family: @font-family-medium;
+  color: #fff;
+  text-align: center;
+  border: none;
+  background: @bg-color;
+}
+
+.fb-social(@pos-x: 0) {
+  background-position: @pos-x 0;
+  &:hover {background-position: @pos-x -36px;}
+}
+
+
+// General settings
+// -------------------------
+#zone-footer-wrapper {
+  border-top: 50px solid @fb-border-color;
+
+  #block-nodeblock-1049,
+  #block-nodeblock-1050 {
+    /* Vertrauen and media footer blocks */
+    display: none;
+
+    @media @normal {
+      display: block;
+    }
+  }
+  #block-views-locations-block,
+  #block-webform-client-block-1301 {
+    width: 50%;
+
+    @media @normal {
+      width: 235px;
+    }
+  }
+
+}
+
+/* General settings */
+#region-footer-first {
+  section.block {
+    float: left;
+    margin-top: -50px;
+    width: 235px;
+    min-height: 395px;
+    background: url(../images/footer_line.png) no-repeat 100% 80px;
+
+    h2.block-title {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 30px;
+      font-family: @font-family-medium;
+      font-size: @font-size-base;
+      color: #444;
+      line-height: 50px;
+      border-right: 1px solid #fff;
+      background: url(../images/footer_stamp.png) no-repeat 15px 15px;
+
+      span.arrow {
+        position: absolute;
+        top: 50px;
+        left: 113px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid @fb-border-color;
+      }
+    }
+
+    .content {
+      padding: 0 10px;
+    }
+
+    a.social {
+      display: inline-block;
+      text-indent: -1000px;
+      overflow: hidden;
+      width: 36px;
+      height: 36px;
+      background: url(../images/social_icons.png) no-repeat;
+    }
+    a.social.rss {
+      display: block;
+      margin: 0 auto;
+      .fb-social();
+    }
+  }
+}
+
+/* Location block */
+#region-footer-first {
+  section#block-views-locations-block {
+    font-size: 12px;
+
+    h2.block-title {
+      background-image: url(../images/footer_phone.png);
+    }
+    strong {
+      font-family: @font-family-medium;
+    }
+
+    ul.header_links{
+      #hso-mixins.list-header-link-buttons();
+    }
+
+    div.views-field-field-address span.fax {
+      .fb-address-field();
+    }
+    div.views-field-field-address span.phone {
+      .fb-address-field(0, -20px);
+    }
+    div.views-field-field-email {
+      .fb-address-field(0, -40px);
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+    a.kontakt_link {
+      .fb-button();
+    }
+    a.social.twitter { .fb-social(-72px); }
+    a.social.facebook { .fb-social(-108px); }
+    a.social.youtube { .fb-social(-144px); }
+    a.social.googleplus { .fb-social(-180px); }
+    a.social.xing { .fb-social(-216px); }
+    a.social.linkedin { .fb-social(-252px); }
+
+  }
+}
+
+/* Webform block */
+#region-footer-first {
+  section#block-webform-client-block-1301 {
+    background: none;
+    font-size: @font-size-small;
+
+    h2.block-title {
+      border: none;
+      background: url(../images/footer_mail.png) no-repeat 15px 20px;
+    }
+
+    h2.node-title {
+      display: none;
+    }
+
+    label {
+      font-family: @font-family-medium;
+      font-weight: normal;
+    }
+
+    .form-item,
+    .form-actions {
+      margin: 3px 0;
+    }
+    input.form-text {
+      width: 100%;
+      border: 1px solid #bababa;
+      background: #fff;
+      height: 22px;
+    }
+    input.form-submit {
+      .fb-button(@branding-bg);
+    }
+  }
+
+}
+

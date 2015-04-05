@@ -1,0 +1,103 @@
+/*
+ *  Course content type
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-table (@seg-color) {
+  table.aufeinenblock {
+    caption {
+      color: @seg-color;
+    }
+
+    tbody {
+      border-bottom-color: @seg-color;
+      border-top-color: @seg-color;
+
+      tr {
+        th {
+          border-bottom-color: @seg-color;
+        }
+
+        td {
+          border-bottom-color: @seg-color;
+        }
+      }
+    }
+  }
+}
+
+
+// Sidebar settings
+// -------------------------
+body.node-type-course {
+  h1#page-title {
+    width: 510px;
+  }
+
+  #region-sidebar-second {
+    margin-top: 0;
+
+    @media @normal {
+      margin-top: -50px;
+    }
+  }
+}
+
+
+// General settings
+// -------------------------
+.node.node-course{
+  table.aufeinenblock{
+    caption {
+      font-size: 20px;
+    }
+
+    tbody {
+      margin: 10px 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      padding: 0 20px;
+      display: block;
+      font-size: 13px;
+
+      tr {
+        th {
+          padding: 10px 0;
+          font-family: @font-family-medium;
+          font-size: 14px;
+          border-bottom: 1px solid transparent;
+        }
+
+        td {
+          padding: 10px 0;
+          border-bottom: 1px solid transparent;
+        }
+
+        &:last-child th,
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // specific tables
+  body.kvcollege_section & {
+    .specific-table (@hso-kv-college);
+  }
+  body.hscollege_section & {
+    .specific-table (@hso-handelsschule);
+  }
+  body.kscollege_section & {
+    .specific-table (@hso-kaderschule);
+  }
+  body.excollege_section & {
+    .specific-table (@hso-executive);
+  }
+
+}

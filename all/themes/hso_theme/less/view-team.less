@@ -1,0 +1,143 @@
+/*
+ *  Team view Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+.view.view-team {
+  .view-header {
+    background: #e3e3e3;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+
+    a {
+      display: inline-block;
+      padding-right: 20px;
+      font-family: @font-family-medium;
+      font-size: 14px;
+      color: #000;
+      text-decoration: none;
+
+      &.first {
+        font-size: 18px;
+        padding-right: 25px;
+      }
+
+      &:hover {
+        color: @branding-bg;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .user_profile {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    padding-left: 180px;
+    width: 270px;
+    font-size: 13px;
+    color: #9b9a9a;
+
+    .field-name-field-full-name {
+      font-family: @font-family-medium;
+      font-size: 18px;
+
+      a {
+        color: #4c4c4c;
+
+        &:hover {
+          color: @branding-bg;
+        }
+      }
+    }
+
+    .field-name-field-position-function {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #4c4c4c;
+    }
+
+    .field-name-field-phone,
+    .field-email {
+      display: block;
+      padding-left: 22px;
+      line-height: 20px;
+      background: url(../images/contact_icons.jpg) no-repeat 0 -40px;
+
+      a {
+        color: #9b9a9a;
+      }
+    }
+    .field-name-field-phone {
+      margin-top: 5px;
+      background: url(../images/contact_icons_2.png) no-repeat 0 -20px;
+    }
+
+    .user-picture {
+      margin-left: -180px;
+      float: left;
+
+      img {
+        width: 160px;
+        height: 210px;
+      }
+    }
+
+    .field-name-field-place {
+      margin-top: 5px;
+
+      .field-item:before {
+        float: left;
+        content: ' ';
+        margin-right: 12px;
+        width: 18px;
+        height: 15px;
+        background: url(../images/team_icons.png) no-repeat 4px 0;
+      }
+    }
+  }
+
+  .views-row-odd .user_profile {
+    clear: both;
+  }
+
+  // social fields
+  .field-name-field-google-url a,
+  .field-name-field-twitter-url a,
+  .field-name-field-linkedin-url a,
+  .field-name-field-xing-url a {
+    float: left;
+    overflow: hidden;
+    margin: 8px 5px 0;
+    width: 14px;
+    height: 15px;
+    text-indent: -1000px;
+    background: url(../images/team_icons.png) no-repeat -14px 0;
+  }
+  .field-name-field-google-url a {
+    background-position: -28px 0;
+  }
+  .field-name-field-xing-url a {
+    background-position: -42px 0;
+  }
+  .field-name-field-linkedin-url a {
+    background-position: -56px 0;
+  }
+
+  // pager
+  #hso-mixins.views-pager();
+}
+
+
+
+

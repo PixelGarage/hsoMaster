@@ -1,0 +1,73 @@
+/*
+ *  HSO pages tabs (block-5)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+#block-menu-block-5 {
+  padding-left: 5px;
+  margin-bottom: 30px;
+  background: url(../images/hso_bg_tabs.jpg) no-repeat 0 20px;
+
+  ul.menu {
+    #hso-mixins.no-list-style;
+
+    li {
+      #hso-mixins.no-list-style;
+      float: left;
+      margin: 0;
+      padding: 0;
+      #hso-mixins.border-radius-top-left(4px);
+      #hso-mixins.border-radius-top-right(4px);
+      border: 1px solid #d3d2ce;
+      background: @branding-bg;
+
+      a {
+        display: block;
+        padding: 0.5em 1em;
+        font-family: @font-family-regular;
+        font-size: @font-size-small;
+        color: #fff;
+        line-height: 34px;
+        text-decoration: none;
+      }
+
+      &:hover,
+      &.active {
+        border-bottom: 1px solid #fff;
+        background: #fff;
+
+        a {
+          color: @branding-bg;
+        }
+      }
+
+    }
+  }
+}
+
+#block-menu-block-5 ul.menu li.menu-mlid-1193 a,
+#block-menu-block-5 ul.menu li.menu-mlid-1195 a,
+#block-menu-block-5 ul.menu li.menu-mlid-1196 a,
+#block-menu-block-5 ul.menu li.menu-mlid-1197 a {
+  padding-left: 42px;
+  background: url(/sites/default/files/styles/center/public/centers/career_schwarz.png) no-repeat 10px 13px;
+}
+#block-menu-block-5 ul.menu li.menu-mlid-1195 a {
+  background-image: url(/sites/default/files/styles/center/public/centers/excellence_schwarz.png);
+}
+#block-menu-block-5 ul.menu li.menu-mlid-1196 a {
+  background-image: url(/sites/default/files/styles/center/public/centers/research_schwarz.png);
+}
+#block-menu-block-5 ul.menu li.menu-mlid-1197 a {
+  background-image: url(/sites/default/files/styles/center/public/centers/learning_schwarz.png);
+}

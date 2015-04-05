@@ -1,0 +1,62 @@
+/*
+ *  Footer menu component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+#region-footer-second {
+  position: relative;
+  clear: both;
+  margin-top: 20px;
+  padding: 15px 0;
+  border-top: 1px solid #ddd;
+
+  #block-nodeblock-1188 {
+    // HSO copyright
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    font-size: @font-size-small;
+
+    strong {
+      font-family: @font-family-medium;
+    }
+  }
+
+  #block-menu-block-2 ul {
+    // footer menu
+    #hso-mixins.no-list-style;
+    text-align: center;
+
+    li {
+      display: inline;
+      #hso-mixins.no-list-style;
+
+      a {
+        display: inline-block;
+        font-family: @font-family-regular;
+        font-size: @font-size-small;
+        text-decoration: none;
+        padding: 0 15px;
+        color: #8f8f8f;
+
+        &.active,
+        &:hover {
+          color: @branding-bg;
+        }
+      }
+    }
+  }
+
+}
+
+

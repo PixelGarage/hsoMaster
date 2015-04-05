@@ -1,0 +1,88 @@
+/*
+ *  Witercho-blog page Component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+.blog-pane-title() {
+  position: relative;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-family: @font-family-light;
+  font-size: 20px;
+  line-height: 30px;
+  background: #e3e3e3;
+
+  span.arrow {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid #E3E3E3;
+    left: 50px;
+    position: absolute;
+    top: 50px;
+  }
+}
+
+
+// Blog view settings
+// -------------------------
+#witercho_blog {
+  float: left;
+  width: 550px;
+}
+
+// blog list
+.pane-blog-panel-pane-1 {
+  .pane-title {
+    .blog-pane-title;
+  }
+
+  .view-blog {
+    #hso-mixins.views-pager();
+  }
+}
+
+// favorite blogs (blog sidebar)
+.pane-blog-panel-pane-2 {
+  .pane-title {
+    .blog-pane-title;
+  }
+
+  .view-blog {
+    .node.node-news {
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #fff;
+      background: @branding-bg;
+
+      .field-name-field-picture {
+        display: none;
+        margin: -20px -20px 10px;
+      }
+
+      h2.node-title,
+      h2.node-title a {
+        font-size: 17px;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .submitted {
+        color: #fff;
+      }
+
+      .node-links a {
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+

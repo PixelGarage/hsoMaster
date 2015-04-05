@@ -1,0 +1,137 @@
+/*
+ *  Testimonial view, block and content type
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// View settings
+// -------------------------
+.view-testimonials {
+  position: relative;
+
+  h2.pane-title {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    font-family: @font-family-regular;
+    font-size: 24px;
+    line-height: 55px;
+    background: #e3e3e3;
+  }
+
+  .view-content .views-row {
+    /* contains testimonial node*/
+    float: left;
+    margin: 0 9px;
+    width: 295px;
+  }
+
+  .more-link {
+    a {
+      position: absolute;
+      top: -60px;
+      right: 20px;
+      padding-right: 20px;
+      font-family: @font-family-regular;
+      font-size: 15px;
+      color: #000;
+      text-decoration: none;
+      background: url(../images/small_arrow.png) no-repeat center right;
+    }
+  }
+}
+body.front .view-testimonials .views-row.views-row-odd {
+  margin-left: 0;
+}
+body.front .view-testimonials .views-row.views-row-even {
+  margin-right: 0;
+}
+
+
+// Testimonial block settings
+// -------------------------
+#block-views-testimonials-block-1 {
+  margin-top: 30px;
+
+  .view-testimonials .views-row {
+    margin: 0 5px;
+  }
+}
+
+
+// Node settings
+// -------------------------
+.node.node-testimonial {
+  position: relative;
+  width: 295px;
+  height: 348px;
+  color: #fff;
+  margin-bottom: 20px;
+
+  header {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding-top: 50px;
+    padding-left: 30px;
+    height: 70px;
+    width: 265px;
+    background: url(../images/bg_testimonial.png) no-repeat;
+  }
+
+  h2.node-title {
+    margin-bottom: 5px;
+    font-size: @font-size-large;
+  }
+  span.arrow {
+    position: absolute;
+    top: 348px;
+    left: 142px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid @branding-bg;
+    display: block;
+  }
+
+  .front,
+  .back {
+    width: 295px;
+    height: 348px;
+  }
+  .back {
+    display: none;
+  }
+
+  .field-name-field-picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  div.position {
+    font-size: 14px;
+  }
+
+  div.field-name-body {
+    margin-top: 30px;
+    font-style: italic;
+  }
+
+  .content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 30px;
+    width: 235px;
+    background: @branding-bg;
+    height: 288px;
+  }
+}
+

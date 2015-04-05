@@ -1,0 +1,334 @@
+/*
+ *  Main-menu component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+@small-column-width: 145px;
+@small-column-width-wb: @small-column-width+1;
+
+@medium-column-width: 175px; //115px;
+@medium-column-width-wb: @medium-column-width+1;
+
+@column-width: 234px; // 155px;
+@column-width-with-border: @column-width+1;
+
+
+// Mixins
+// -------------------------
+
+// Main menu item definition
+.main-menu-item(@seg-color, @seg-hover, @seg-hover-dark, @left-shift: 0px) {
+  a {
+    background-color: @seg-color;
+
+    span.arrow {
+      border-top-color: @seg-color;
+    }
+
+  }
+
+  a.active-trail,
+  &.touch_hover a,
+  &:hover a {
+    background-color: @seg-hover;
+
+    span.arrow {
+      border-top-color: @seg-hover;
+    }
+  }
+
+  ul.menu {
+    /* Submenu position under top menu */
+    background: @seg-color;
+    left: @left-shift;
+
+    li,
+    li.double .view-content  {
+      width: @column-width;
+      border-right: 1px solid @seg-hover;
+
+      a:hover {
+        color: @seg-hover-dark;
+      }
+    }
+  }
+
+}
+
+
+// General settings
+// -------------------------
+
+#zone-menu-wrapper {
+  position: relative;
+  background: @branding-bg;
+
+  // specific menu background
+  body.kvcollege_section & {
+    background: @hso-kv-college;
+  }
+  body.hscollege_section & {
+    background: @hso-handelsschule;
+  }
+  body.kscollege_section & {
+    background: @hso-kaderschule;
+  }
+  body.excollege_section & {
+    background: @hso-executive;
+  }
+}
+
+
+// fixed menu
+#section-header.fixed_position {
+  padding-bottom: 40px;
+
+  #zone-menu-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+
+    .block-banners-block-1,
+    .block-banners-block,
+    #main_top_banners {
+      display: none;
+    }
+  }
+}
+
+/*
+ * MAIN MENU
+ */
+#block-menu-block-1 {
+  position: relative;
+  z-index: 10;
+
+  ul {
+    // main menu
+    #hso-mixins.no-list-style;
+
+    li {
+      #hso-mixins.no-list-style;
+      position: relative;
+      float: left;
+      /* small column width */
+      width: @small-column-width;
+
+      &.nolink-main {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 0 10px;
+        font-family: @font-family-bold;
+        font-size: @font-size-base;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      & .nolink,
+      &.nolink {
+        display: inline-block;
+        margin: 10px 0 7px;
+        padding: 0 15px;
+        font-family: @font-family-medium;
+        font-size: 14px;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      a {
+        display: block;
+        position: relative;
+        font-family: @font-family-regular;
+        font-size: 13px;
+        color: #fff;
+        text-decoration: none;
+        line-height: 40px;
+        height: 40px;
+        padding: 0 20px;
+        background: url(../images/menu_arrow.png) no-repeat 113px 19px;
+      }
+
+      ul.menu {
+        /* Menu block dropdown (invisible and animated when hovered) */
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 40px;
+        padding: 20px 0;
+        /* 2 normal columns wide */
+        width: 2 * @column-width-with-border;
+        z-index: 30;
+
+        li {
+          a {
+            padding: 0 5px 7px 20px;
+            height: auto;
+            min-height: 20px;
+            font-size: @font-size-small;
+            line-height: 13px;
+            background: transparent;
+          }
+
+          &.last {
+            /* no borders for last column */
+            border-right: none !important;
+          }
+
+          &.menu-views {
+            /* do not display first menu column (output from view) in small/medium size menu */
+            display: none;
+          }
+
+          & li {
+            /* full width and no borders for menu rows inside columns */
+            border-right: none !important;
+            width: 100%;
+          }
+        }
+
+        ul.menu {
+          /* Menu block dropdown last two columns (Informationen, Ausbildungskonzept) */
+          display: block;
+          position: static;
+          /* normal column width with border*/
+          width: @column-width-with-border;
+          padding: 0;
+        }
+
+      }
+
+      &.menu-mlid-986 {
+        /* KV Kollege top-menu background (normal, hovered) */
+        .main-menu-item(@hso-kv-college, @hso-kv-college-hover, @hso-kv-college-hover-dark, @left-shift: 0px);
+      }
+
+      &.menu-mlid-987 {
+        /* Handelsschule top-menu background */
+        .main-menu-item(@hso-handelsschule, @hso-handelsschule-hover, @hso-handelsschule-hover-dark, @left-shift: 0px);
+      }
+
+      &.menu-mlid-988 {
+        /* Kaderschule top-menu background */
+        .main-menu-item(@hso-kaderschule, @hso-kaderschule-hover, @hso-kaderschule-hover-dark, @left-shift: -290px);
+      }
+
+      &.menu-mlid-989 {
+        /* Executive top-menu background */
+        .main-menu-item(@hso-executive, @hso-executive-hover, @hso-executive-hover-dark, @left-shift: -325px);
+      }
+
+    }
+  }
+}
+
+/*
+ * define width of sub-columns when doubled
+ */
+#block-menu-block-1 li.double .view-content,
+#block-menu-block-1 li.double .view-content-right {
+  float: left;
+  width: @column-width;
+}
+#block-menu-block-1 li.double .view-content-right {
+  /* aligns top of sub-columns */
+  padding-top: 33px;
+}
+
+/*
+ * Top menu drop-down arrow and hyperlink styling (only visible when menu is hovered)
+ */
+#block-menu-block-1 ul li {
+  span.arrow {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 105px;
+    z-index: 5;
+    border-top: 13px solid;
+    border-right: 13px solid transparent;
+    border-left: 13px solid transparent;
+  }
+
+  & a.active-trail,
+  &.touch_hover,
+  &:hover {
+    & span.arrow {
+      display: block;
+    }
+
+    & ul.menu li a {
+      min-height: 20px;
+      padding: 0 5px 7px 20px;
+      font-size: @font-size-small;
+      line-height: 13px;
+      background: transparent;
+    }
+  }
+}
+
+
+@media @narrow {
+  #block-menu-block-1 ul li {
+    width: @medium-column-width;     /* medium size menu */
+  }
+
+  /* place dropdown arrow for medium sized top menus */
+  #block-menu-block-1 ul li a {
+    background-position: 143px 19px;
+    font-size: 14px;
+  }
+  #block-menu-block-1 ul li.menu-mlid-988 ul.menu,
+  #block-menu-block-1 ul li.menu-mlid-988 ul.menu.double,
+  #block-menu-block-1 ul li.menu-mlid-989 ul.menu,
+  #block-menu-block-1 ul li.menu-mlid-989 ul.menu.double {
+    left: -295px;   /* left-shift last two menus, so that menu ends with last top menu  */
+  }
+
+}
+
+@media @normal {
+  /*
+   *  Block Menu styling
+   */
+  #block-menu-block-1 ul li {
+    width: @column-width-with-border;   /* width of 1 column */
+  }
+
+  /* Arrow of top menus */
+  #block-menu-block-1 ul li a {
+    font-size: 16px;
+    background-position: 203px 19px;
+  }
+
+  /* define normal sized menus width and position */
+  #block-menu-block-1 ul li ul.menu {
+    width: 3 * @column-width-with-border;   /* 3 columns */
+  }
+  #block-menu-block-1 ul li ul.menu.double {
+    width: 4 * @column-width-with-border !important;    /* 4 columns */
+  }
+  #block-menu-block-1 li.double {
+    width: 469px !important;
+  }
+  #block-menu-block-1 ul li.menu-mlid-988 ul.menu {
+    left: -@column-width-with-border;   /* left-shift second last menu, so that menu starts with second top menu  */
+  }
+  #block-menu-block-1 ul li.menu-mlid-988 ul.menu.double {
+    left: -2 * @column-width-with-border;   /* left-shift second last double menu, so that menu starts with first top menu  */
+  }
+  #block-menu-block-1 ul li.menu-mlid-989 ul.menu {
+    left: -2 * @column-width-with-border;   /* left-shift last menu, so that menu ends with last top menu  */
+  }
+  #block-menu-block-1 ul li.menu-mlid-989 ul.menu.double {
+    left: -3 * @column-width-with-border;   /* left-shift last double menu, so that menu ends with last top menu  */
+  }
+
+  /* display first menu column (output from view) in normal sized menus */
+  #block-menu-block-1 ul li ul.menu li.menu-views {
+    display: block;
+  }
+
+}

@@ -1,0 +1,5 @@
+name = "HSO Anmeldung Form"
+description = "HSO Anmeldung Form"
+package = "HSO"
+core = "7.x"
+version = "1.0"

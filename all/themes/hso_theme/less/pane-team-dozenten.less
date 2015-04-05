@@ -1,0 +1,101 @@
+/*
+ *  Team Dozenten pane
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-browser-arrows (@bg-image) {
+  .pane-content{
+    a.browse {
+      background-image: @bg-image;
+    }
+  }
+}
+
+
+// General settings
+// -------------------------
+.pane-team-panel-pane-1 {
+  .pane-title {
+    margin-bottom: 20px;
+    font-family: @font-family-medium;
+    font-size: 20px;
+  }
+
+  .pane-content{
+    position: relative;
+
+    .view {
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      width: 560px;
+      height: 195px;
+
+      .view-content {
+        position: absolute;
+        width: 200000em;
+
+        .views-row {
+          float: left;
+          margin: 0 10px;
+          width: 92px;
+          font-size: @font-size-small;
+
+          .views-field-picture {
+            margin-bottom: 10px;
+            height: 113px;
+          }
+
+          .views-field-field-position-function {
+            font-family: @font-family-medium;
+          }
+        }
+      }
+    }
+
+    a.browse {
+      /* browser arrows prev / next*/
+      cursor: pointer;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      width: 21px;
+      height: 25px;
+
+      &:hover {
+        background-position: -21px 0;
+      }
+
+      &.prev {
+        left: 0;
+        right: auto;
+        background-position: 0 -25px;
+
+        &:hover {
+          background-position: -21px -25px;
+        }
+      }
+    }
+  }
+
+  // specific browser arrows
+  body.kvcollege_section & {
+    .specific-browser-arrows (url(../images/kv_dozenten_pager.png));
+  }
+  body.hscollege_section & {
+    .specific-browser-arrows (url(../images/hs_dozenten_pager.png));
+  }
+  body.kscollege_section & {
+    .specific-browser-arrows (url(../images/ks_dozenten_pager.png));
+  }
+  body.excollege_section & {
+    .specific-browser-arrows (url(../images/ex_dozenten_pager.png));
+  }
+
+}
+

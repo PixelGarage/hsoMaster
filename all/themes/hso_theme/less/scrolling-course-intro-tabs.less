@@ -1,0 +1,190 @@
+/*
+ *  Course-intros pane (scrolling tabs)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-pane-course-intros(@seg-color; @tabs-bg-image; @link-bg-image) {
+  .pane-title {
+    color: @seg-color;
+    border-bottom-color: @seg-color;
+  }
+
+  .view-course-intros {
+    // add scrollable tab view
+    #hso-mixins.specific-scrollable-tab-view(@seg-color; @tabs-bg-image);
+
+    .views-field-field-teaser-tabs {
+      .item-list{
+        ul.scrollable {
+          li {
+            .more_details a {
+              background: @seg-color;
+            }
+          }
+        }
+
+        .teasertabs_links {
+          a {
+            background-image: @link-bg-image;
+
+            &:hover {
+              color: @seg-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// General settings
+// -------------------------
+.panel-pane.pane-course-intros {
+  .pane-title {
+    padding-bottom: 0;
+    margin: 20px 0;
+    font-size: 20px;
+  }
+
+  .view-course-intros {
+    // add scrollable tab view
+    #hso-mixins.scrollable-tab-view();
+
+    .ui-tabs-panel {
+      padding: 0;
+      #hso-mixins.border-radius();
+      border: none;
+      background: transparent;
+
+      .views-field-title {
+        display: none;
+      }
+
+      .views-field-field-teaser-tabs {
+        h2.teaser_title {
+          font-family: @font-family-regular;
+          font-size: @font-size-h3;
+        }
+
+        .item-list {
+          overflow: hidden;
+          position: relative;
+          width: 608px;
+          margin-bottom: 20px;
+          padding-bottom: 70px;
+          border: 1px solid #d4d3d0;
+          border-top: none;
+
+          ul.scrollable {
+            position: relative;
+            top: 0;
+            left: 0;
+            margin: 0;
+            width: 20000em;
+
+            li {
+              position: relative;
+              float: left;
+              padding: 20px;
+              width: 568px;
+
+              .field-name-field-body {
+                font-family: @font-family-light;
+                font-size: 14px;
+                color: #000;
+              }
+
+              .more_details {
+                text-align: center;
+
+                a {
+                  display: inline-block;
+                  margin: 10px auto;
+                  padding: 0 30px;
+                  font-family: @font-family-medium;
+                  font-size: @font-size-small;
+                  color: #fff;
+                  text-decoration: none;
+                  line-height: 32px;
+                }
+              }
+
+            }
+          }
+
+          .teasertabs_links {
+            position: absolute;
+            top: 20px;
+            left: 305px;
+            width: 295px;
+            text-align: right;
+            z-index: 3;
+
+            a {
+              display: inline-block;
+              padding-right: 20px;
+              text-decoration: none;
+              font-family: @font-family-medium;
+              font-size: @font-size-base + 1;
+              color: #b2b2b2;
+              line-height: 21px;
+
+              &.previous {
+                background-position: 0 -20px;
+                padding-left: 20px;
+                padding-right: 0;
+              }
+            }
+
+            &.footer {
+              top: auto;
+              left: 0;
+              bottom: 0;
+              padding: 15px 0;
+              width: 610px;
+              height: 21px;
+              text-align: center;
+              border-top: 1px solid #d4d3d0;
+            }
+
+            &.header a {
+              font-size: 12px;
+            }
+
+            .divider {
+              display: inline-block;
+              overflow: hidden;
+              margin: 0 20px;
+              vertical-align: middle;
+              line-height: 21px;
+              text-indent: -100px;
+              border-left: 2px solid #b2b2b2;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  // specific intro pane settings
+  body.kvcollege_section & {
+    .specific-pane-course-intros(@hso-kv-college; url(../images/kv_bg_tabs.jpg); url(../images/kv_teaser_tabs_pager.png));
+  }
+  body.hscollege_section & {
+    .specific-pane-course-intros(@hso-handelsschule; url(../images/hs_bg_tabs.jpg); url(../images/hs_teaser_tabs_pager.png));
+  }
+  body.kscollege_section & {
+    .specific-pane-course-intros(@hso-kaderschule; url(../images/ks_bg_tabs.jpg); url(../images/ks_teaser_tabs_pager.png));
+  }
+  body.excollege_section & {
+    .specific-pane-course-intros(@hso-executive; url(../images/ex_bg_tabs.jpg); url(../images/ex_teaser_tabs_pager.png));
+  }
+}
+

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the hso-extension-November2013 feature.
+ */
+
+include_once 'hso_extension_november2013.features.inc';

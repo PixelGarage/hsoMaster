@@ -1,0 +1,59 @@
+/*
+ *  Facebook block component (block 1)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+#block-block-1 {
+  background: #a3a3a3 url(../images/fb.png) no-repeat 260px 22px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  h2.block-title {
+    color: #fff;
+    font-size: 22px;
+    font-family: @font-family-light;
+  }
+
+  .fb-facepile.fb_iframe_widget {
+    overflow: hidden;
+    margin-top: 20px;
+
+    iframe {
+      top: -40px;
+    }
+  }
+
+  .follow {
+    text-align: right;
+
+    a {
+      display: inline-block;
+      font-size: @font-size-large;
+      color: #fff;
+      line-height: 30px;
+      text-decoration: none;
+      background: #8793ac;
+      padding: 0 30px;
+
+    }
+  }
+}
+
+body.responsive-layout-mobile.front {
+  #block-block-1,
+  #block-block-2 {
+    float: left;
+    width: 260px;
+  }
+}
+

@@ -1,0 +1,145 @@
+/*
+ *  Witercho sidebar block component (mini-home-blog)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-mini-segment-blog (@seg-color; @blog-color; @blog-icon; @pane-color) {
+  h2.block-title {
+    background: @blog-color @blog-icon no-repeat 0 0;
+  }
+
+  .pane-title {
+    background: @pane-color;
+
+    &.active,
+    &:hover {
+      background: @seg-color;
+    }
+
+    .arrow {
+      border-top-color: @seg-color;
+    }
+  }
+}
+
+
+// General settings
+// -------------------------
+#block-panels-mini-segment-blog,
+#block-panels-mini-home-blog {
+  margin-bottom: 20px;
+
+  h2.block-title {
+    padding: 15px 15px 15px 40px;
+    height: 20px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 20px;
+    border-bottom: 1px solid #fff;
+    background: #e40421 url(../images/blog_icon.png) no-repeat 12px 18px;
+  }
+
+  .pane-title {
+    #hso-mixins.box-sizing(border-box);
+    display: block;
+    position: relative;
+    float: left;
+    margin: 0;
+    width: 50%;
+    font-family: @font-family-regular;
+    font-size: 14px;
+    color: #fff;
+    line-height: 27px;
+    text-align: center;
+    text-decoration: none;
+    border-left: 1px solid #fff;
+    background: #ef6d7e;
+
+    &.first {
+      border-left: none;
+    }
+
+    &.active,
+    &:hover {
+      background: @branding-bg;
+
+      .arrow {
+        display: block;
+        left: 50%;
+        top: 27px;
+      }
+
+    }
+
+    .arrow {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 27px;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid @branding-bg;
+    }
+  }
+
+  .pane-content {
+    .view.view-blog-blocks {
+      font-size: 14px;
+      clear: both;
+
+      .view-content {
+        border: 1px solid #ddd;
+        border-top: none;
+        padding: 15px;
+
+        .views-row {
+          clear: both;
+
+          .views-field-title h2,
+          .views-field-title a {
+            color: #272727;
+            text-decoration: none;
+            font-size: 16px;
+          }
+
+          .views-field-created {
+            font-size: 12px;
+            color: #272727;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+body.responsive-layout-mobile.front {
+  #block-panels-mini-home-blog {
+    width: 47%;
+    float: right;
+    margin-right: 8px;
+  }
+}
+
+
+
+#block-panels-mini-segment-blog {
+  body.kvcollege_section & {
+    .specific-mini-segment-blog(@hso-kv-college; #e4edc4; url(../images/kv_blog.png); #c4d890);
+  }
+  body.hscollege_section & {
+    .specific-mini-segment-blog(@hso-handelsschule; #fae4d7; url(../images/hs_blog.png); #f3b793);
+  }
+  body.kscollege_section & {
+    .specific-mini-segment-blog(@hso-kaderschule; #e6e4ef; url(../images/ks_blog.png); #b0aec6);
+  }
+  body.excollege_section & {
+    .specific-mini-segment-blog(@hso-executive; #e7e5de; url(../images/ex_blog.png); #ccc7bd);
+  }
+}
+
+

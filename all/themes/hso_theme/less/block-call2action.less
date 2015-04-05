@@ -1,0 +1,88 @@
+/*
+ *  Call2Action-block component (block 4)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.define-call2action (){
+  /* Bildungsberatung */
+  a.call2action {
+    display: inline-block;
+    overflow: hidden;
+    width: 302px;
+    height: 69px;
+    text-indent: -1000px;
+    background: url(../images/bildungsberatung.png) no-repeat 0 0;
+  }
+  /* Broschüre bestellen */
+  a.call2action.broschuere_bestellen {
+    background-image: url(../images/broschure_bestellen.png);
+  }
+  /* Stardaten suchen */
+  a.call2action.startdaten_suchen {
+    background-image: url(../images/startdaten_suchen.png);
+  }
+}
+
+
+// General settings
+// -------------------------
+// no display in main content on desktop
+#block-system-main {
+  .define-call2action();
+
+  a.call2action.broschuere_bestellen,
+  a.call2action.startdaten_suchen {
+    margin-right: 6px;
+  }
+
+  /* extract correct button color from image strip */
+  body.kvcollege_section & a.call2action {
+    background-position: 0 -69px;
+  }
+  body.hscollege_section & a.call2action {
+    background-position: 0 -138px;
+  }
+  body.kscollege_section & a.call2action {
+    background-position: 0 -207px;
+  }
+  body.excollege_section & a.call2action {
+    background-position: 0 -276px;
+  }
+
+  @media @narrow {
+    a.call2action {
+      display: none;
+    }
+  }
+}
+
+#region-sidebar-second {
+  a.call2action {
+    display: none;
+  }
+
+  @media @narrow {
+    .define-call2action();
+
+    /* extract correct button color from image strip */
+    body.kvcollege_section & a.call2action {
+      background-position: 0 -69px;
+    }
+    body.hscollege_section & a.call2action {
+      background-position: 0 -138px;
+    }
+    body.kscollege_section & a.call2action {
+      background-position: 0 -207px;
+    }
+    body.excollege_section & a.call2action {
+      background-position: 0 -276px;
+    }
+
+  }
+}
+
