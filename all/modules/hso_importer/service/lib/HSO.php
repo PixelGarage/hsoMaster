@@ -99,7 +99,7 @@ class HSO
 
     $id = intval($id);
 		$result = $this->db->query('SELECT c.branch_id, c.department_id, c.contact_person, c.contact_tel, c.contact_email, c.anm_lehrgang_id, ' .
-                              'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_short ' .
+                              'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_id, b.brand_short ' .
                               'FROM anm_contacts c JOIN anm_branches b ON (c.branch_id = b.branch_id) ' .
                               'WHERE c.department_id = ' . $id . ' ORDER BY b.branch_id, c.anm_lehrgang_id');
 		while ($row = $result->fetch_object()) {
@@ -117,6 +117,7 @@ class HSO
 			$contact->location->fax = $row->branch_fax;
 			$contact->location->phone = $row->branch_phone;
 			$contact->location->email = $row->branch_mail;
+      $contact->location->brand_id = $row->brand_id;
       $contact->location->brand_short = $row->brand_short;
 			$contacts[] = $contact;
 		}
@@ -142,7 +143,7 @@ class HSO
       ' AND (b.brand_id = ' . $brand_id . ' OR b.brand_id = 1 AND b.standort_id IN (SELECT bb.standort_id FROM anm_branches bb WHERE bb.brand_id = ' . $brand_id . '))';
 
     $result = $this->db->query('SELECT c.branch_id, c.department_id, c.contact_person, c.contact_tel, c.contact_email, c.lehrgang_id, ' .
-                                'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_short ' .
+                                'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_id, b.brand_short ' .
                                 'FROM anm_contacts c JOIN anm_branches b ON (c.branch_id = b.branch_id) ' .
                                 'WHERE c.lehrgang_id = ' . $id . $and_s_visible_for_brand . ' ORDER BY b.brand_id, b.branch_id');
     while ($row = $result->fetch_object()) {
@@ -161,6 +162,7 @@ class HSO
       $contact->location->fax = $row->branch_fax;
       $contact->location->phone = $row->branch_phone;
       $contact->location->email = $row->branch_mail;
+      $contact->location->brand_id = $row->brand_id;
       $contact->location->brand_short = $row->brand_short;
       $contacts[] = $contact;
     }
@@ -350,6 +352,7 @@ class HSO
       $time->location->fax = $row->branch_fax;
       $time->location->phone = $row->branch_phone;
       $time->location->email = $row->branch_mail;
+      $time->location->brand_id = $row->brand_id;
       $time->location->brand_short = $row->brand_short;
 			$times[] = $time;
 		}
@@ -366,7 +369,7 @@ class HSO
 		$locations = array();
     if(!$this->connected) return $locations;
 
-    $result = $this->db->query('SELECT branch_id, branch_town, branch_address, branch_zip, branch_fax, branch_phone, branch_mail, brand_short ' .
+    $result = $this->db->query('SELECT branch_id, branch_town, branch_address, branch_zip, branch_fax, branch_phone, branch_mail, brand_id, brand_short ' .
                                 'FROM anm_branches WHERE brand_id > 0 ORDER BY branch_id ASC');
 		while ($row = $result->fetch_object()) {
       $location = new StdClass();
@@ -377,6 +380,7 @@ class HSO
       $location->fax = $row->branch_fax;
       $location->phone = $row->branch_phone;
       $location->email = $row->branch_mail;
+      $location->brand_id = $row->brand_id;
       $location->brand_short = $row->brand_short;
 			$locations[] = $location;
 		}
@@ -394,7 +398,7 @@ class HSO
     if(!$this->connected) return $location;
 
     $id = intval($id);
-		$result = $this->db->query('SELECT branch_id, branch_town, branch_address, branch_zip, branch_fax, branch_phone, branch_mail, brand_short ' .
+		$result = $this->db->query('SELECT branch_id, branch_town, branch_address, branch_zip, branch_fax, branch_phone, branch_mail, brand_id, brand_short ' .
                                 'FROM anm_branches WHERE brand_id > 0 AND branch_id = ' . $id);
 		if ($row = $result->fetch_object()) {
       $location = new StdClass();
@@ -405,6 +409,7 @@ class HSO
       $location->fax = $row->branch_fax;
       $location->phone = $row->branch_phone;
       $location->email = $row->branch_mail;
+      $location->brand_id = $row->brand_id;
       $location->brand_short = $row->brand_short;
 		}
 		return $location;

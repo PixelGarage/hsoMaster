@@ -452,6 +452,7 @@ function _hso_process_location($location) {
 
   // update all imported fields of node
 	$node->title = $location->brand_short == 'HSO' ? $location->name : $location->name . ' (' . $location->brand_short . ')';
+  $node->field_tab_text[LANGUAGE_NONE][0]['value'] = $location->name;
   $node->field_internal_id[LANGUAGE_NONE][0]['value'] = $location->id;
 	$node->field_address[LANGUAGE_NONE][0]['country'] = 'CH';
 	$node->field_address[LANGUAGE_NONE][0]['thoroughfare'] = $location->address;
@@ -460,6 +461,7 @@ function _hso_process_location($location) {
 	$node->field_address[LANGUAGE_NONE][0]['phone_number'] = $location->phone;
 	$node->field_address[LANGUAGE_NONE][0]['fax_number'] = $location->fax;
 	$node->field_email[LANGUAGE_NONE][0]['email'] = $location->email;
+  $node->field_brand[LANGUAGE_NONE][0]['tid'] = _hso_brands_id_converter($location->brand_id);
   $node->field_standorte[LANGUAGE_NONE][0]['value'] = true;
 	$node = node_submit($node);
 	node_save($node);
