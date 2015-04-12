@@ -28,7 +28,8 @@ function hso_anmeldung_menu() {
  */
 function _hso_get_anmeldung_pdf($hash) {
 	if (preg_match('/^[a-z0-9]{32}$/i', $hash)) {
-		$pdf = drupal_realpath('private://anmeldung/anmeldung_logo_' . $hash . '.pdf');
+    $dir_uri = file_stream_wrapper_get_instance_by_uri('private://anmeldung');
+		$pdf = $dir_uri->realpath() . '/anmeldung_logo_' . $hash . '.pdf';
 		if (file_exists($pdf)) {
 			if (filemtime($pdf) >= time() - 28 * 86400) {
 				file_transfer('private://anmeldung/anmeldung_logo_' . $hash . '.pdf', array(
@@ -143,7 +144,7 @@ function hso_anmeldung_mail_alter(&$message) {
 							'%gruss_formel%' => $grussformel,
 							'%contact_name%' => $contact ? $contact->title : '',
 							'%contact_phone%' => $contact ? $contact->field_phone[LANGUAGE_NONE][0]['value'] : '',
-              '%course_time_variante%' => $course_time_node ? $course_time_node->body[LANGUAGE_NONE][0]['value'] : '',
+              '%course_time_variante%' => !empty($course_time_node->body) ? $course_time_node->body[LANGUAGE_NONE][0]['value'] : '',
 						);
 
             // replace tokens with values in mail and complete mail with attachment and address
@@ -198,7 +199,19 @@ function _hso_get_contact($course_nid, $location_nid) {
 }
 
 /**
- * Replace the tokens in the rtf-template with the given course time data and create pdf from it.
+ * Replace the tokens in the html-template with the given course time data and create pdf from it.
+ *
+ * Destination where to send the document. It can take one of the following values:
+ * <ul>
+ *  <li>I: send the file inline to the browser (default). The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.</li>
+ *  <li>D: send to the browser and force a file download with the name given by name.</li>
+ *  <li>F: save to a local server file with the name given by name.</li>
+ *  <li>S: return the document as a string (name is ignored).</li>
+ *  <li>FI: equivalent to F + I option</li>
+ *  <li>FD: equivalent to F + D option</li>
+ *  <li>E: return the document as base64 mime multi-part email attachment (RFC 2045)</li>
+ * </ul>
+ *
  */
 function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $course, $course_time_node, $webform_components, $submission, $submission_sid, $to_client) {
 	$template = $course_time_node->field_template[LANGUAGE_NONE][0]['value'];
@@ -236,7 +249,7 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
 		$to_search['%NOFMODULE%'] = $mod_count;
 		$to_search['%KOSTEN%'] = $mod_count * 65;
 	} 
-	$course_time_description = strip_tags($course_time_node->body[LANGUAGE_NONE][0]['value']);
+	$course_time_description = !empty($course_time_node->body) ? strip_tags($course_time_node->body[LANGUAGE_NONE][0]['value']) : '';
 	$to_search['%ADDITIONALFIELDS%'] = implode(PHP_EOL, $additional_fields);
 	$to_search['%LEHRGANG%'] = $course->title . (empty($course_time_description) ? '' : ', ' . $course_time_description);
   $to_search['%ABTEILUNG%'] = $segment ? $segment->name : '-';
@@ -256,7 +269,7 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
 	$start_date = date('d.m.Y', strtotime($course_time_node->field_course_date[LANGUAGE_NONE][0]['value']));
   $to_search['%LGSTART%'] = $start_time == '00:00' ? $start_date : $start_date . ', ' . $start_time;
   $to_search['%DATUM%'] = date('d.m.Y');
-  $to_search['%DETAILEDCOSTS%'] = sprintf('CHF %s (CHF %s, falls für Kantonsbeiträge qualifiziert.)',
+  $to_search['%DETAILEDCOSTS%'] = sprintf('CHF %s (CHF %s, falls Sie f&#252;r die Kantonsbeitr&#228;ge qualifiziert sind.)',
     $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'], $course_time_node->field_netto_price[LANGUAGE_NONE][0]['value']);
   if (!empty($course->field_price_detailed) && !empty($course->field_price_detailed[LANGUAGE_NONE][0]['value'])) {
     $to_search['%DETAILEDCOSTS%'] = $course->field_price_detailed[LANGUAGE_NONE][0]['value'];
@@ -264,43 +277,67 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
   $to_search['%COSTS%'] = 'CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
   $to_search['%GRUSSFORMEL%'] = $grussformel;
 
-  // correct encoding for token values
-	$to_replace = array_map('_hso_convert_encoding', $to_search);
-
-  // get brand specific rtf file
+  // get brand specific html file
   $brand_short = taxonomy_term_load($course_time_node->field_brand[LANGUAGE_NONE][0]['tid'])->name;
   $brand = ($brand_short != 'HSO') ? '_' . strtolower($brand_short) : '';
-  $rtf_file = drupal_get_path('module', 'hso_anmeldung') . '/templates/' . $template . '_anmeldung_template' .
-              ($to_client ? '_logo' : '') . $brand . '.rtf';
-  if (file_exists($rtf_file)) {
-    // replace tokens in rtf file and write temp file
-  	$rtf_string = file_get_contents($rtf_file);
-  	$rtf_processed = str_replace(array_keys($to_search), $to_replace, $rtf_string);
-  	$tmpnam = tempnam(file_directory_temp(), 'rtf-anmeldung-');
-		$handle = fopen($tmpnam, 'w');
-		fwrite($handle, $rtf_processed);
-		fclose($handle);
-		chmod($tmpnam, 0666);
+  $html_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/' . $template . '_anmeldung_template' . $brand . '.html';
 
-    // convert rtf file to pdf
-		$script = drupal_realpath(drupal_get_path('module', 'hso_anmeldung')) . '/scripts/rtf2pdf.sh';
-		$filename = drupal_realpath('private://anmeldung/anmeldung_' . ($to_client ? 'logo_' : '' ) . md5($submission_sid . '2I7L1N1') . '.pdf');
-		$command = $script . ' ' . $tmpnam . ' ' . $filename;
-		system($command);
-		unlink($tmpnam);
+  // replace tokens in html file, if it exists
+  if (file_exists($html_file)) {
+    //libxml_use_internal_errors(true);
+    $doc = new DOMDocument();
+    $doc->loadHTMLFile($html_file);
+    $doc->normalizeDocument();
+    $pdf_string = $doc->saveHTML($doc->getElementsByTagName('style')->item(0));
+    $pdf_string .= $doc->saveHTML($doc->getElementsByTagName('body')->item(0));
+    $pdf_string = str_replace(array_keys($to_search), array_values($to_search), $pdf_string);
+
+    // convert html string to pdf
+    $dir_uri = file_stream_wrapper_get_instance_by_uri('private://anmeldung');
+    $filepath = $dir_uri->realpath() . '/anmeldung_' . ($to_client ? 'logo_' : '' ) . md5($submission_sid . '2I7L1N1') . '.pdf';
+    $options = array(
+      'title' => $to_client ? 'Anmeldereservation' : 'Anmeldung',
+      'subject' => $brand_short,
+      'author' => $brand_short,
+      'keywords' => $brand_short . 'Anmeldung, tcpdf, PDF, Drupal, Pixelgarage',
+      'header' => array(
+        'callback' => array(
+          'function' => '_hso_add_pdf_header',
+          'context' => array(
+            'client_copy' => $to_client ? 'yes' : 'no',
+            'brand' => strtolower($brand_short),
+          ),
+        ),
+      ),
+      'footer' => array(
+        'callback' => array(
+          'function' => 'hso_add_pdf_footer',
+          'context' => array(
+          ),
+        ),
+      ),
+    );
+    $pdf = tcpdf_document_instance($options);
+    $pdf->setHtmlVSpace(array('p' => array(array('h' => 1, 'n' => 0.1), array('h' => 1, 'n' => 0.1))));
+    $pdf->writeHtml($pdf_string, true, false, true, false, '');
+    $pdf->lastPage();
+    $pdf->Output($filepath, 'F');
+
+
+    // create file class and return it
 		$file = new StdClass();
 		if ($template == 'ecdl') {
 			$file->filename = $to_client ? 'anmeldereservation.pdf' : 'anmeldung.pdf';
 		} else {
 			$file->filename = $to_client ? 'ausbildungsvertrag.pdf' : 'anmeldung.pdf';
 		}
-		$file->filepath = $filename;
+		$file->filepath = $filepath;
 		return $file;
-  }
-}
 
-function _hso_convert_encoding($text) {
-	return mb_convert_encoding($text, 'ISO-8859-1', 'UTF-8');
+  } else {
+    watchdog('Create Anmeldung PDF', 'The template file @file does not exist.', array('@file' => $html_file), WATCHDOG_ERROR);
+
+  }
 }
 
 function _hso_make_h4i($course, $course_time_node, $webform_components, $submission) {
@@ -334,6 +371,29 @@ function _hso_make_h4i($course, $course_time_node, $webform_components, $submiss
   $file->filecontent = $file_content;
   return $file;
 }
+
+/**
+ * Callback function to define header.
+ * @param $pdf_document
+ * @param $context
+ */
+function _hso_add_pdf_header(&$pdf_document, $context) {
+  if ($context['client_copy'] == 'yes') {
+    // draw Logo top right, if document is for client
+    $image_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/template_logo_' . $context['brand'] . '.png';
+    $pdf_document->Image($image_file, 5, 10, 30, '', '', '', 'T', 2, 300, 'R');
+  }
+}
+
+/**
+ * Callback function to define footer.
+ * @param $pdf_document
+ * @param $context
+ */
+function _hso_add_pdf_footer(&$pdf_document, $context) {
+  // no footer
+}
+
 
 
 /* --------------------------------------------------
