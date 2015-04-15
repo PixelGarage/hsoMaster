@@ -11,7 +11,8 @@
 function hso_importer_cron() {
   $last_time = variable_get('hso_importer_cron_last_run', 0);
   if (REQUEST_TIME - $last_time >= 4*3600) {
-  	//_hso_importer_run_import();
+  	_hso_importer_run_import();
+    variable_set('hso_importer_cron_last_run', REQUEST_TIME);
   }
 }
 /**
