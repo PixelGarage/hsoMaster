@@ -18,9 +18,7 @@ if ($course_time_nid) {
 		$segment = !empty($course->field_segment) ? taxonomy_term_load($course->field_segment[LANGUAGE_NONE][0]['tid']) : FALSE;
 		$location = !empty($course_time_node->field_location) ? node_load($course_time_node->field_location[LANGUAGE_NONE][0]['target_id']) : FALSE;
 		$pdf_link = url('get_anmeldung/' . md5($sid . '2I7L1N1'));
-		$tracking_price = !empty($course->field_tracking_price) && !empty($course->field_tracking_price[LANGUAGE_NONE][0]['value']) ?
-      $course->field_tracking_price[LANGUAGE_NONE][0]['value'] :
-      $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
+		$tracking_price = $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
 	}
 }
 ?>

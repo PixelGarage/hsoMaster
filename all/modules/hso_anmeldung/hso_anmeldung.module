@@ -271,9 +271,6 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
   $to_search['%DATUM%'] = date('d.m.Y');
   $to_search['%DETAILEDCOSTS%'] = sprintf('CHF %s (CHF %s, falls Sie f&#252;r die Kantonsbeitr&#228;ge qualifiziert sind.)',
     $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'], $course_time_node->field_netto_price[LANGUAGE_NONE][0]['value']);
-  if (!empty($course->field_price_detailed) && !empty($course->field_price_detailed[LANGUAGE_NONE][0]['value'])) {
-    $to_search['%DETAILEDCOSTS%'] = $course->field_price_detailed[LANGUAGE_NONE][0]['value'];
-  }
   $to_search['%COSTS%'] = 'CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
   $to_search['%GRUSSFORMEL%'] = $grussformel;
 
@@ -442,21 +439,13 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
 
   	} else {
       // default, european form
-			if (empty($course_time_node->field_brutto_price) || empty($course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'])) {
+			if (empty($course_time_node->field_brutto_price) && empty($course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'])) {
 				$form['submitted']['agbcheck']['#access'] = FALSE;
 
 			} else {
-				$text = '<strong>Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und ';
-				if (!empty($course->field_price_detailed) && !empty($course->field_price_detailed[LANGUAGE_NONE][0]['value'])) {
-					$text .= 'bin mir &#252;ber folgende Kosten bewusst:</strong><ul><li>' . $course->field_price_detailed[LANGUAGE_NONE][0]['value'] . '</li></ul>';
-				} else {
-					$text .= 'bin mir &#252;ber die Kosten f&#252;r das erste Semester von CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'] . '.-- bewusst.</strong><br />';
-				}
-				if (!empty($course->field_no_registration_fee) && $course->field_no_registration_fee[LANGUAGE_NONE][0]['value']) {
-					$text .= 'Zus&#228;tzlich fallen allf&#228;llige Buchungszuschl&#228;ge bei Ratenzahlung an. ';
-				} else {
-					$text .= 'Zus&#228;tzlich fallen die ' . l('Einschreibegeb&#252;hr', 'node/' . $agb_nid, array('html' => true, 'fragment' => 'anmeldung')) . ' und allf&#228;llige Buchungszuschl&#228;ge bei Ratenzahlung an. ';
-				}
+				$text = '<strong>Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und ' .
+                'bin mir &#252;ber die Kosten f&#252;r das erste Semester von CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'] . '.-- bewusst.</strong><br />';
+				$text .= 'Zus&#228;tzlich fallen die ' . l('Einschreibegeb&#252;hr', 'node/' . $agb_nid, array('html' => true, 'fragment' => 'anmeldung')) . ' und allf&#228;llige Buchungszuschl&#228;ge bei Ratenzahlung an. ';
 				if ($course->field_segment[LANGUAGE_NONE][0]['tid'] == 1) {
           // KV College
 					$text .= 'Die Anmeldung ist nur im Zusammenhang mit einem Beratungsgespr&#228;ch und einem Einstufungstest g&#252;ltig.';
