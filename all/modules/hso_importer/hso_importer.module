@@ -512,10 +512,32 @@ function _hso_process_contact($contact) {
 	$node->field_location[LANGUAGE_NONE][0]['target_id'] = $contact->location_nid;
 	$node->field_segment[LANGUAGE_NONE][] = array('tid' => $contact->segment_tid);
   $node->field_course[LANGUAGE_NONE][0]['target_id'] = $contact->course_nid;
+  // contact picture
+  if ($file = _hso_get_contact_picture($contact)) {
+    $node->field_picture[LANGUAGE_NONE][0] = (array)$file;
+    file_usage_add($file, 'hso_importer', 'user_pictures', $node->id);
+  }
 	$node = node_submit($node);
 	node_save($node);
 	$already_processed[$contact->id] = $node->nid;
 	return $node->nid;
+}
+
+function _hso_get_contact_picture($contact) {
+  $path = drupal_realpath($contact->picture);
+  if (file_exists($path)) {
+    // create user picture object
+    $file = new stdClass;
+    $file->uid = 1;
+    $file->filename = $contact->id . '.jpg';
+    $file->uri = $path;
+    $file->filemime = file_get_mimetype($path);
+    $file->filesize = filesize($path);
+    $file->status = 1;
+    $file = file_save($file);
+    return $file;
+  }
+  return false;
 }
 
 /**
@@ -557,14 +579,7 @@ function _hso_process_course($course) {
 	$node->title = $course->title;
   $node->field_internal_id[LANGUAGE_NONE][0]['value'] = $course->id;
   $node->field_segment[LANGUAGE_NONE][] = array('tid' => $course->segment_tid);
-	$node->field_price[LANGUAGE_NONE][0]['value'] = $course->price;
-	$node->field_price_detailed[LANGUAGE_NONE][0]['value'] = $course->price_detailed;
-	$node->field_tracking_price[LANGUAGE_NONE][0]['value'] = $course->tracking_price;
-	$node->field_minimum[LANGUAGE_NONE][0]['value'] = !empty($course->min_places) ? $course->min_places : 0;
-	$node->field_maximum[LANGUAGE_NONE][0]['value'] = !empty($course->max_places) ? $course->max_places : NULL;
-	$node->field_template[LANGUAGE_NONE][0]['value'] = !empty($course->template) && in_array($course->template, array('ecdl', 'european', 'salesfunnel')) ? $course->template : 'default';
 	$node->field_is_module[LANGUAGE_NONE][0]['value'] = !empty($course->is_module) ? 1 : 0;
-	$node->field_no_registration_fee[LANGUAGE_NONE][0]['value'] = !empty($course->no_registration_fee) ? 1 : 0;
 	if (!empty($course->meta->title)) {
 		$node->metatags['title']['value'] = $course->meta->title;
 	}

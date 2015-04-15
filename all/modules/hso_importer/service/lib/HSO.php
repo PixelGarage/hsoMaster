@@ -98,13 +98,13 @@ class HSO
     if(!$this->connected) return $contacts;
 
     $id = intval($id);
-		$result = $this->db->query('SELECT c.branch_id, c.department_id, c.contact_person, c.contact_tel, c.contact_email, c.anm_lehrgang_id, ' .
+		$result = $this->db->query('SELECT c.branch_id, c.department_id, c.show_value, c.contact_person, c.contact_tel, c.contact_email, c.anm_lehrgang_id, ' .
                               'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_id, b.brand_short ' .
                               'FROM anm_contacts c JOIN anm_branches b ON (c.branch_id = b.branch_id) ' .
                               'WHERE c.department_id = ' . $id . ' ORDER BY b.branch_id, c.anm_lehrgang_id');
 		while ($row = $result->fetch_object()) {
 			$contact = new StdClass();
-			$contact->id = $row->metadata_id;
+			$contact->id = $row->show_value;
 			$contact->name = $row->contact_person;
 			$contact->phone = $row->contact_tel;
 			$contact->email = $row->contact_email;
@@ -142,17 +142,18 @@ class HSO
     $and_s_visible_for_brand = ($brand_id == 1) ? '' :
       ' AND (b.brand_id = ' . $brand_id . ' OR b.brand_id = 1 AND b.standort_id IN (SELECT bb.standort_id FROM anm_branches bb WHERE bb.brand_id = ' . $brand_id . '))';
 
-    $result = $this->db->query('SELECT c.branch_id, c.department_id, c.contact_person, c.contact_tel, c.contact_email, c.lehrgang_id, ' .
+    $result = $this->db->query('SELECT c.branch_id, c.department_id, c.show_value, c.contact_person, c.contact_tel, c.contact_email, c.lehrgang_id, ' .
                                 'b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_id, b.brand_short ' .
                                 'FROM anm_contacts c JOIN anm_branches b ON (c.branch_id = b.branch_id) ' .
                                 'WHERE c.lehrgang_id = ' . $id . $and_s_visible_for_brand . ' ORDER BY b.brand_id, b.branch_id');
     while ($row = $result->fetch_object()) {
       $contact = new StdClass();
       // define unique internal id, no representation on server
-      $contact->id = $row->branch_id . sprintf('%08s', $row->lehrgang_id);
+      $contact->id = $row->show_value;
       $contact->name = $row->contact_person;
       $contact->phone = $row->contact_tel;
       $contact->email = $row->contact_email;
+      $contact->picture = 'public://user_pictures/' . $row->show_value . '.jpg';
       // create location object (branch)
       $contact->location = new StdClass();
       $contact->location->id = $row->branch_id;
@@ -207,14 +208,6 @@ class HSO
       $course->segment_id = $row->department_id;
       $course->title = $row->webRegistrationTitle;
       $course->is_module = $row->type == 'MODUL';
-      // legacy fields
-      $course->price = (float)0;
-      $course->price_detailed = '';
-      $course->tracking_price = 0;
-      $course->min_places = 0;
-      $course->max_places = 0;
-      $course->template = 'default';
-      $course->no_registration_fee = null;
       // create meta object
       $course->meta = new StdClass();
       $course->meta->title = $row->webRegistrationTitleMeta;
@@ -244,14 +237,6 @@ class HSO
       $course->segment_id = $row->department_id;
       $course->title = $row->webRegistrationTitle;
       $course->is_module = $row->type == 'MODUL';
-      // legacy fields
-      $course->price = (float)0;
-      $course->price_detailed = '';
-      $course->tracking_price = 0;
-      $course->min_places = 0;
-      $course->max_places = 0;
-      $course->template = 'default';
-      $course->no_registration_fee = null;
       // create meta object
       $course->meta = new StdClass();
       $course->meta->title = $row->webRegistrationTitleMeta;
@@ -282,14 +267,6 @@ class HSO
       $course->segment_id = $row->department_id;
       $course->title = $row->webRegistrationTitle;
       $course->is_module = $row->type == 'MODUL';
-      // legacy fields
-      $course->price = (float)0;
-      $course->price_detailed = '';
-      $course->tracking_price = 0;
-      $course->min_places = 0;
-      $course->max_places = 0;
-      $course->template = 'default';
-      $course->no_registration_fee = null;
       // create meta object
       $course->meta = new StdClass();
       $course->meta->title = $row->webRegistrationTitleMeta;
