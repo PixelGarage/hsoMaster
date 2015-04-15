@@ -515,29 +515,43 @@ function _hso_process_contact($contact) {
   // contact picture
   if ($file = _hso_get_contact_picture($contact)) {
     $node->field_picture[LANGUAGE_NONE][0] = (array)$file;
-    file_usage_add($file, 'hso_importer', 'user_pictures', $node->id);
+    $node = node_submit($node);
+    node_save($node);
+  } else {
+    $node = node_submit($node);
+    node_save($node);
   }
-	$node = node_submit($node);
-	node_save($node);
 	$already_processed[$contact->id] = $node->nid;
 	return $node->nid;
 }
 
 function _hso_get_contact_picture($contact) {
-  $path = drupal_realpath($contact->picture);
-  if (file_exists($path)) {
-    // create user picture object
-    $file = new stdClass;
-    $file->uid = 1;
+  $path = $contact->picture;
+  if (!file_exists($path)) {
+    $path = 'public://user_pictures/default.jpg';
+  }
+  // get/ create user picture object
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $path)
+    ->range(0, 1);
+  $result = $query->execute();
+  if (isset($result['file'])) {
+    // get existing
+    $file = file_load(key($result['file']));
+
+  } else {
+    $file           = new stdClass;
+    $file->uid      = 1;
     $file->filename = $contact->id . '.jpg';
-    $file->uri = $path;
+    $file->uri      = $path;
     $file->filemime = file_get_mimetype($path);
     $file->filesize = filesize($path);
-    $file->status = 1;
-    $file = file_save($file);
-    return $file;
+    $file->status   = 1;
+    $file           = file_save($file);
+
   }
-  return false;
+  return $file;
 }
 
 /**
