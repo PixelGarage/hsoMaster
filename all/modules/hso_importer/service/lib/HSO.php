@@ -296,7 +296,7 @@ class HSO
       ' AND (b.brand_id = ' . $brand_id . ' OR b.brand_id = 1 AND b.standort_id IN (SELECT bb.standort_id FROM anm_branches bb WHERE bb.brand_id = ' . $brand_id . '))';
 
     $query = 'SELECT a.df_id, a.start_date, a.start_time, a.end_date, a.durchf_text, a.lehrgang_id, a.nof_tn, a.price_brutto, a.price_netto, ' .
-      'a.webTemplate, a.teilnehmer_min, a.teilnehmer_max, ' .
+      'a.webTemplate, a.teilnehmer_min, a.teilnehmer_max, a.price_text, a.price_additional, ' .
       'b.branch_id, b.branch_town, b.branch_address, b.branch_zip, b.branch_fax, b.branch_phone, b.branch_mail, b.brand_id, b.brand_short ' .
       'FROM anm_durchfuehrungen_combined a ' .
       'LEFT JOIN anm_branches b ON (a.branch_id = b.branch_id) ' .
@@ -314,6 +314,8 @@ class HSO
 			$time->has_subsidy = $row->price_brutto <> $row->price_netto;
       $time->price_brutto = $row->price_brutto;
       $time->price_netto = $row->price_netto;
+      $time->price_detailed = $row->price_text;
+      $time->price_additional = $row->price_additional;
       $time->taken_places = $row->nof_tn == -1 ? 0 : $row->nof_tn;
       $time->no_vacancy = $row->nof_tn == -1;
       $time->min_places = $row->teilnehmer_min;

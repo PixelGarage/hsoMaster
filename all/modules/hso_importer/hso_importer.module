@@ -665,6 +665,10 @@ function _hso_process_course_time($time) {
 	}
   $node->field_brutto_price[LANGUAGE_NONE][0]['value'] = $time->price_brutto;
   $node->field_netto_price[LANGUAGE_NONE][0]['value'] = $time->price_netto;
+  $node->field_detailed_price[LANGUAGE_NONE][0]['value'] = $time->price_detailed;
+  $node->field_detailed_price[LANGUAGE_NONE][0]['format']  = 'html';
+  $node->field_additional_info_price[LANGUAGE_NONE][0]['value'] = $time->price_additional;
+  $node->field_additional_info_price[LANGUAGE_NONE][0]['format']  = 'html';
 	$node->field_taken_places[LANGUAGE_NONE][0]['value'] = !empty($time->taken_places) ? $time->taken_places : 0;
   $node->field_minimum[LANGUAGE_NONE][0]['value'] = !empty($time->min_places) ? $time->min_places : 0;
   $node->field_maximum[LANGUAGE_NONE][0]['value'] = !empty($time->max_places) ? $time->max_places : NULL;

@@ -35,7 +35,7 @@ function _hso_get_anmeldung_pdf($hash) {
 				file_transfer('private://anmeldung/anmeldung_logo_' . $hash . '.pdf', array(
 					'Cache-control'       => 'private',
 					'Content-Type'        => 'application/octet-stream',
-					'Content-Disposition' => 'attachment; filename="anmeldereservation.pdf"',
+					'Content-Disposition' => 'attachment; filename="Ausbildungsvertrag.pdf"',
 					'Content-Length' => filesize($pdf)
 				));
 			}
@@ -269,10 +269,15 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
 	$start_date = date('d.m.Y', strtotime($course_time_node->field_course_date[LANGUAGE_NONE][0]['value']));
   $to_search['%LGSTART%'] = $start_time == '00:00' ? $start_date : $start_date . ', ' . $start_time;
   $to_search['%DATUM%'] = date('d.m.Y');
-  $to_search['%DETAILEDCOSTS%'] = sprintf('CHF %s (CHF %s, falls Sie f&#252;r die Kantonsbeitr&#228;ge qualifiziert sind.)',
-    $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'], $course_time_node->field_netto_price[LANGUAGE_NONE][0]['value']);
   $to_search['%COSTS%'] = 'CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
   $to_search['%GRUSSFORMEL%'] = $grussformel;
+  // detail costs
+  //$detail_costs = '<strong>Ich bin mir &#252;ber folgende Kosten bewusst:</strong><br />';
+  $detail_costs = $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
+  if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
+    $detail_costs .= '<br />' . $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
+  }
+  $to_search['%DETAILEDCOSTS%'] = $detail_costs;
 
   // get brand specific html file
   $brand_short = taxonomy_term_load($course_time_node->field_brand[LANGUAGE_NONE][0]['tid'])->name;
@@ -431,25 +436,23 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
   		$agb_nid = $segment->field_agb_nid[LANGUAGE_NONE][0]['value'];
   	}
 
-    // add Anmeldungs-Bedingungen to be confirmed
+    // add Anmeldungs conditions
     if ($form_id == 'webform_client_form_476') {
       // ecdl form
   		$text = 'Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und bin mir &#252;ber die Kosten von ' .
         '<strong id="agb_costs">CHF 0.--</strong> bewusst, welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.';
 
   	} else {
-      // default, european form
-			if (empty($course_time_node->field_brutto_price) && empty($course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'])) {
+      // default & european form
+			if (empty($course_time_node->field_detailed_price) || empty($course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'])) {
 				$form['submitted']['agbcheck']['#access'] = FALSE;
 
 			} else {
-				$text = '<strong>Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und ' .
-                'bin mir &#252;ber die Kosten f&#252;r das erste Semester von CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'] . '.-- bewusst.</strong><br />';
-				$text .= 'Zus&#228;tzlich fallen die ' . l('Einschreibegeb&#252;hr', 'node/' . $agb_nid, array('html' => true, 'fragment' => 'anmeldung')) . ' und allf&#228;llige Buchungszuschl&#228;ge bei Ratenzahlung an. ';
-				if ($course->field_segment[LANGUAGE_NONE][0]['tid'] == 1) {
-          // KV College
-					$text .= 'Die Anmeldung ist nur im Zusammenhang mit einem Beratungsgespr&#228;ch und einem Einstufungstest g&#252;ltig.';
-				}
+				$text = '<strong>Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und bin mir &#252;ber folgende Kosten bewusst:</strong><br />';
+				$text .= $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
+        if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
+          $text .= $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
+        }
 			}
 
 		}
