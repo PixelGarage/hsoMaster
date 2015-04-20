@@ -58,7 +58,7 @@
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-define ('K_PATH_IMAGES', drupal_get_path('theme', 'standard_theme') . '/images/');
+define ('K_PATH_IMAGES', drupal_get_path('theme', 'hso_theme') . '/images/');
 
 /**
  * Deafult image logo used be the default Header() method.
@@ -74,7 +74,7 @@ define ('PDF_HEADER_LOGO_WIDTH', 30);
 /**
  * Cache directory for temporary files (full path).
  */
-define ('K_PATH_CACHE', drupal_realpath('temporary://tcpdf/cache'));
+define ('K_PATH_CACHE', drupal_realpath('temporary://'));
 
 /**
  * Generic name for a blank image.
