@@ -439,7 +439,7 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
     // add Anmeldungs conditions
     if ($form_id == 'webform_client_form_476') {
       // ecdl form
-  		$text = 'Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und bin mir &#252;ber die Kosten von ' .
+  		$text = 'Ich habe die ' . l('Allgemeinen Geschäftsbedingungen (AGB)', 'node/' . $agb_nid) . ' gelesen und bin mir &#252;ber die Kosten von ' .
         '<strong id="agb_costs">CHF 0.--</strong> bewusst, welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.';
 
   	} else {
@@ -448,11 +448,12 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
 				$form['submitted']['agbcheck']['#access'] = FALSE;
 
 			} else {
-				$text = '<strong>Ich habe die ' . l('Bestimmungen', 'node/' . $agb_nid) . ' gelesen und bin mir &#252;ber folgende Kosten bewusst:</strong><br />';
-				$text .= $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
+				$text = $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
         if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
           $text .= $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
         }
+        $form['submitted']['markup']['#markup'] = $text;
+        $text = '<strong>Ich habe die ' . l('Allgemeinen Geschäftsbedingungen (AGB)', 'node/' . $agb_nid) . ' gelesen und bin damit einverstanden.</strong><br />';
 			}
 
 		}
