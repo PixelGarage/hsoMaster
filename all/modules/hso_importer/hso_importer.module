@@ -10,7 +10,9 @@
  */
 function hso_importer_cron() {
   $last_time = variable_get('hso_importer_cron_last_run', 0);
-  if (REQUEST_TIME - $last_time >= 4*3600) {
+  $cron_from_outside = $_GET['kickFromHsoCronJob'];
+
+  if ($cron_from_outside == 'RunItBaby' || REQUEST_TIME - $last_time >= 48*3600) {
   	_hso_importer_run_import();
     variable_set('hso_importer_cron_last_run', REQUEST_TIME);
   }
@@ -207,14 +209,18 @@ function _hso_importer_brand_import($hso_importer, $departments_mapping, $brand_
           $imported_course_times = array();
           foreach ($course_times as $course_time) {
             // don't import course times starting in the past
-            if (strtotime($course_time->start_date) + 86400 < time()) continue;
+            //if (strtotime($course_time->start_date) + 86400 < time()) continue;
 
             // process course time
             $course_time->course_nid = $course_nid;
             $course_time->course_title = $course->title;
-            $course_time->location_nid = _hso_process_location($course_time->location);
+            $location_nid = _hso_process_location($course_time->location);
+            $course_time->location_nid = $location_nid;
             _hso_process_course_time($course_time);
-            $imported_course_times[] = $course_time->id;
+            if (!array_key_exists($location_nid, $imported_course_times)) {
+              $imported_course_times[$location_nid] = array();
+            }
+            $imported_course_times[$location_nid][] = $course_time->id;
             $course_times_processed++;
           }
 
@@ -228,11 +234,15 @@ function _hso_importer_brand_import($hso_importer, $departments_mapping, $brand_
             $imported_contacts = array();
             foreach ($contacts as $contact) {
               // location (branch) is mandatory on contact
-              $contact->location_nid = _hso_process_location($contact->location);
+              $location_nid = _hso_process_location($contact->location);
+              $contact->location_nid = $location_nid;
               $contact->segment_tid = $segment_taxonomy_id;
               $contact->course_nid = $course_nid;
               _hso_process_contact($contact);
-              $imported_contacts[] = $contact->id;
+              if (!array_key_exists($location_nid, $imported_contacts)) {
+                $imported_contacts[$location_nid] = array();
+              }
+              $imported_contacts[$location_nid][] = $contact->id;
               $contacts_processed++;
             }
 
@@ -365,14 +375,17 @@ function _hso_unpublish_courses($imported_courses, $segment_taxonomy_id) {
  */
 function _hso_cleanup_course_times($imported_course_times, $course_nid) {
   $imported_course_times = count($imported_course_times) > 0 ? $imported_course_times : array(0 => 0);
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'course_times')
-    ->fieldCondition('field_internal_id', 'value', $imported_course_times, 'NOT IN')
-    ->fieldCondition('field_course', 'target_id', $course_nid);
-  $result = $query->execute();
-  if (isset($result['node'])) {
-    node_delete_multiple(array_keys($result['node']));
+  foreach ($imported_course_times as $location_nid => $course_times) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'course_times')
+      ->fieldCondition('field_location', 'target_id', $location_nid)
+      ->fieldCondition('field_course', 'target_id', $course_nid)
+      ->fieldCondition('field_internal_id', 'value', $course_times, 'NOT IN');
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      node_delete_multiple(array_keys($result['node']));
+    }
   }
 }
 
@@ -386,14 +399,17 @@ function _hso_cleanup_course_times($imported_course_times, $course_nid) {
  */
 function _hso_cleanup_contacts($imported_contacts, $course_nid) {
   $imported_contacts = count($imported_contacts) > 0 ? $imported_contacts : array(0 => 0);
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'contact')
-    ->fieldCondition('field_internal_id', 'value', $imported_contacts, 'NOT IN')
-    ->fieldCondition('field_course', 'target_id', $course_nid);
-  $result = $query->execute();
-  if (isset($result['node'])) {
-    node_delete_multiple(array_keys($result['node']));
+  foreach ($imported_contacts as $location_nid => $contacts) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'contact')
+      ->fieldCondition('field_location', 'target_id', $location_nid)
+      ->fieldCondition('field_course', 'target_id', $course_nid)
+      ->fieldCondition('field_internal_id', 'value', $contacts, 'NOT IN');
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      node_delete_multiple(array_keys($result['node']));
+    }
   }
 }
 
@@ -611,7 +627,8 @@ function _hso_process_course($course) {
 }
 
 /**
- * Saves imported course time in DB, if not processed already.
+ * Saves imported course time in DB. All course times are relevant.
+ * Unique course time is defined by course time, course and location.
  *
  * @param $time object Imported course time object.
  *
@@ -619,17 +636,13 @@ function _hso_process_course($course) {
  * @throws \Exception
  */
 function _hso_process_course_time($time) {
-  // update an imported course time only once
-	static $already_processed = array();
-	if (array_key_exists($time->id, $already_processed)) {
-		return $already_processed[$time->id];
-	}
-
   // load/create course time
 	$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'node')
 		->entityCondition('bundle', 'course_times')
 		->fieldCondition('field_internal_id', 'value', $time->id)
+    ->fieldCondition('field_course', 'target_id', $time->course_nid)
+    ->fieldCondition('field_location', 'target_id', $time->location_nid)
 		->range(0, 1);
 	$result = $query->execute();
 	if (isset($result['node'])) {
@@ -678,7 +691,6 @@ function _hso_process_course_time($time) {
   $node->field_brand[LANGUAGE_NONE][0]['tid'] = _hso_brands_id_converter($time->brand_id);
 	$node = node_submit($node);
 	node_save($node);
-	$already_processed[$time->id] = $node->nid;
 	return $node->nid;
 }
 
