@@ -23,10 +23,9 @@ if ($course_time_nid) {
 }
 ?>
 <div class="webform-confirmation">
-	<h2>Reservationsbestätigung</h2>
   <p>Besten Dank für Ihre Anmeldung.<p>
   <ul>
-    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Reservationsbestätigung (PDF)</a> können Sie nun herunterladen</li>  
+    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Reservationsbestätigung (PDF)</a> können Sie nun herunterladen</li>
     <li>Per E-Mail erhalten Sie dieselbe Reservationsbestätigung in einigen Minuten zugestellt</li>
   </ul>
   <h2>Anmeldenummer</h2>

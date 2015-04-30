@@ -23,7 +23,6 @@ if ($course_time_nid) {
 }
 ?>
 <div class="webform-confirmation">
-	<h2>Reservationsbestätigung</h2>
   <p>Besten Dank für Ihre Anmeldung.<p>
   <ul>
     <li>Den <a target="_blank" href="<?php print $pdf_link; ?>">Ausbildungsvertrag (PDF)</a> können Sie nun herunterladen</li>  
