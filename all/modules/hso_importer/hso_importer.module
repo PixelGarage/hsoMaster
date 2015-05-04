@@ -121,13 +121,7 @@ function _hso_importer_run_import() {
 	$hso_importer = new HsoImporter();
   $hso_importer->init();
   $brand_id = variable_get('hso_importer_brand_select', -1);
-  $departments_mapping = array(
-    1 => 1, // KV College
-    2 => 2, // Handelsschule
-    3 => 3, // Kaderschule
-    6 => 5, // Informatikschule
-    7 => 4, // Executive
-  );
+  $departments_mapping = _hso_departments_mapping();
 
   // brand specifc data import
   $result = NULL;
@@ -267,6 +261,26 @@ function _hso_importer_brand_import($hso_importer, $departments_mapping, $brand_
 /* --------------------------------------------------
  * HSO DB cleanup functions
  * --------------------------------------------------*/
+/**
+ * Creates the segment mappings array.
+ */
+function _hso_departments_mapping() {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'taxonomy_term')
+    ->entityCondition('bundle', 'segments');
+  $result = $query->execute();
+  if ($result && $result['taxonomy_term']) {
+    $mapping = array();
+    foreach ($result['taxonomy_term'] as $key => $value) {
+      $term = taxonomy_term_load($key);
+      $dep_id = $term->field_internal_id[LANGUAGE_NONE][0]['value'];
+      $mapping[$dep_id] = $key;
+    }
+  }
+  // return mapping
+  return $mapping;
+}
+
 /**
  * Converts the brands internal id to the term id.
  */
