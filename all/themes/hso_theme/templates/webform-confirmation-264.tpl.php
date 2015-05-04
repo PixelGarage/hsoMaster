@@ -24,7 +24,6 @@ if ($course_time_nid) {
 }
 ?>
 <div class="webform-confirmation">
-	<h2>Reservationsbestätigung</h2>
   <p>Besten Dank für Ihre Anmeldung.<p>
   <ul>
     <li>Den <a target="_blank" href="<?php print $pdf_link; ?>">Ausbildungsvertrag (PDF)</a> können Sie nun herunterladen</li>  
@@ -33,17 +32,17 @@ if ($course_time_nid) {
 
   <h2>Weiteres Vorgehen</h2>
   <p>Bitte retournieren Sie uns den unterschriebenen Ausbildungsvertrag in den nächsten Tagen per Fax oder per Post. 
-  	Erst damit wird Ihre Anmeldung verbindlich.</p>
+  	Damit wird Ihre Anmeldung rechtskräftig.</p>
 
   <h2>Anmeldenummer</h2>
-  <p>Und dies ist Ihre Anmeldenummer: <b><?php echo str_pad($sid, 6, '0', STR_PAD_LEFT); ?></b><br />
+  <p>Dies ist Ihre Anmeldenummer: <b><?php echo str_pad($sid, 6, '0', STR_PAD_LEFT); ?></b><br />
 	  Halten Sie diese bei Anfragen jeweils bereit.</p>
 
   <h2>Rückgängig machen</h2>
   <p>Wollen Sie Ihre Anmeldung rückgängig machen, nehmen Sie bitte telefonisch mit uns
   	Kontakt auf.</p>
 
-  <p><a href="<?php print url('node/' . $course->nid); ?>">Wieder zurück zum Kurs/Lehrgang</a></p>
+  <p><a href="<?php print url('node/' . $course->nid); ?>">Zurück zum Kurs/Lehrgang</a></p>
 </div>
 <script type="text/javascript">
   var _gaq = _gaq || [];
