@@ -1,0 +1,655 @@
+<?php
+
+$page = new stdClass();
+$page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+$page->api_version = 1;
+$page->name = 'course_anmeldung';
+$page->task = 'page';
+$page->admin_title = 'Anmeldung';
+$page->admin_description = '';
+$page->path = 'node/%node/anmeldung';
+$page->access = array();
+$page->menu = array();
+$page->arguments = array(
+  'node' => array(
+    'id' => 1,
+    'identifier' => 'Node: ID',
+    'name' => 'entity_id:node',
+    'settings' => array(),
+  ),
+);
+$page->conf = array(
+  'admin_paths' => FALSE,
+);
+$page->default_handlers = array();
+$handler = new stdClass();
+$handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+$handler->api_version = 1;
+$handler->name = 'page_course_anmeldung_panel_context';
+$handler->task = 'page';
+$handler->subtask = 'course_anmeldung';
+$handler->handler = 'panel_context';
+$handler->weight = -30;
+$handler->conf = array(
+  'title' => 'Default Template',
+  'no_blocks' => 0,
+  'pipeline' => 'standard',
+  'body_classes_to_remove' => '',
+  'body_classes_to_add' => '',
+  'css_id' => '',
+  'css' => '',
+  'contexts' => array(),
+  'relationships' => array(
+    1 => array(
+      'identifier' => 'Course',
+      'keyword' => 'course',
+      'name' => 'entity_from_field:field_course-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    2 => array(
+      'identifier' => 'Location',
+      'keyword' => 'location',
+      'name' => 'entity_from_field:field_location-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    3 => array(
+      'identifier' => 'Segment',
+      'keyword' => 'segment',
+      'name' => 'entity_from_field:field_segment-node-taxonomy_term',
+      'delta' => 0,
+      'context' => 'relationship_entity_from_field:field_course-node-node_1',
+      'id' => 1,
+    ),
+  ),
+  'access' => array(
+    'plugins' => array(
+      0 => array(
+        'name' => 'node_type',
+        'settings' => array(
+          'type' => array(
+            'course_times' => 'course_times',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'node_status',
+        'settings' => NULL,
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      2 => array(
+        'name' => 'entity_field_value:node:course_times:field_template',
+        'settings' => array(
+          'field_template' => array(
+            'und' => array(
+              0 => array(
+                'value' => 'default',
+              ),
+            ),
+          ),
+          'field_template_value' => array(
+            0 => 'default',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
+  ),
+);
+$display = new panels_display();
+$display->layout = 'onecol';
+$display->layout_settings = array();
+$display->panel_settings = array(
+  'style_settings' => array(
+    'default' => NULL,
+    'middle' => NULL,
+  ),
+);
+$display->cache = array();
+$display->title = '%course:title';
+$display->uuid = '0e9d1b50-d043-43d9-ad8f-63c4ec8b0f35';
+$display->content = array();
+$display->panels = array();
+  $pane = new stdClass();
+  $pane->pid = 'new-ce4dbaac-181a-4eb5-a8c3-9f47397e6289';
+  $pane->panel = 'middle';
+  $pane->type = 'custom';
+  $pane->subtype = 'custom';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'admin_title' => '',
+    'title' => '',
+    'body' => '<p>Füllen Sie bitte das unten stehende Formular aus. Die Felder mit einem <span class="required">*</span> sind Pflichtfelder. Die Anmeldung ist provisorisch und wird Ihnen per E-Mail bestätigt.</p>
+<p>&nbsp;</p>
+<p><strong class="segment_%segment:tid">%segment:name:</strong> %course:title</p>
+<p>%node:body</p>
+<p>%node:field_course_date <strong>in</strong> %location:title</p>
+',
+    'format' => 'html',
+    'substitute' => 1,
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = 'ce4dbaac-181a-4eb5-a8c3-9f47397e6289';
+  $display->content['new-ce4dbaac-181a-4eb5-a8c3-9f47397e6289'] = $pane;
+  $display->panels['middle'][0] = 'new-ce4dbaac-181a-4eb5-a8c3-9f47397e6289';
+  $pane = new stdClass();
+  $pane->pid = 'new-50109a30-1219-4522-bad2-1041c460b65d';
+  $pane->panel = 'middle';
+  $pane->type = 'node';
+  $pane->subtype = 'node';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'nid' => '264',
+    'links' => 0,
+    'leave_node_title' => 0,
+    'identifier' => '',
+    'build_mode' => 'full',
+    'link_node_title' => 0,
+    'override_title' => 1,
+    'override_title_text' => '',
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 1;
+  $pane->locks = array();
+  $pane->uuid = '50109a30-1219-4522-bad2-1041c460b65d';
+  $display->content['new-50109a30-1219-4522-bad2-1041c460b65d'] = $pane;
+  $display->panels['middle'][1] = 'new-50109a30-1219-4522-bad2-1041c460b65d';
+$display->hide_title = PANELS_TITLE_FIXED;
+$display->title_pane = 'new-ce4dbaac-181a-4eb5-a8c3-9f47397e6289';
+$handler->conf['display'] = $display;
+$page->default_handlers[$handler->name] = $handler;
+$handler = new stdClass();
+$handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+$handler->api_version = 1;
+$handler->name = 'page_course_anmeldung_panel_context_2';
+$handler->task = 'page';
+$handler->subtask = 'course_anmeldung';
+$handler->handler = 'panel_context';
+$handler->weight = -29;
+$handler->conf = array(
+  'title' => 'European Template',
+  'no_blocks' => 0,
+  'pipeline' => 'standard',
+  'body_classes_to_remove' => '',
+  'body_classes_to_add' => '',
+  'css_id' => '',
+  'css' => '',
+  'contexts' => array(),
+  'relationships' => array(
+    1 => array(
+      'identifier' => 'Course',
+      'keyword' => 'course',
+      'name' => 'entity_from_field:field_course-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    2 => array(
+      'identifier' => 'Location',
+      'keyword' => 'location',
+      'name' => 'entity_from_field:field_location-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    3 => array(
+      'identifier' => 'Segment',
+      'keyword' => 'segment',
+      'name' => 'entity_from_field:field_segment-node-taxonomy_term',
+      'delta' => 0,
+      'context' => 'relationship_entity_from_field:field_course-node-node_1',
+      'id' => 1,
+    ),
+  ),
+  'access' => array(
+    'plugins' => array(
+      0 => array(
+        'name' => 'node_type',
+        'settings' => array(
+          'type' => array(
+            'course_times' => 'course_times',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'node_status',
+        'settings' => NULL,
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      2 => array(
+        'name' => 'entity_field_value:node:course_times:field_template',
+        'settings' => array(
+          'field_template' => array(
+            'und' => array(
+              0 => array(
+                'value' => 'european',
+              ),
+            ),
+          ),
+          'field_template_value' => array(
+            0 => 'european',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
+  ),
+);
+$display = new panels_display();
+$display->layout = 'onecol';
+$display->layout_settings = array();
+$display->panel_settings = array(
+  'style_settings' => array(
+    'default' => NULL,
+    'middle' => NULL,
+  ),
+);
+$display->cache = array();
+$display->title = '%course:title';
+$display->uuid = 'de4e33b1-2d3a-446c-b053-b08ad741feaa';
+$display->content = array();
+$display->panels = array();
+  $pane = new stdClass();
+  $pane->pid = 'new-3b758e64-74fb-4bf4-bd50-18703cb4bf57';
+  $pane->panel = 'middle';
+  $pane->type = 'custom';
+  $pane->subtype = 'custom';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'admin_title' => '',
+    'title' => '',
+    'body' => '<p><strong>%segment:name: %course:title</strong></p>
+
+<p>%node:body</p>
+
+<p>%node:field_course_date <strong>in</strong> %location:title</p>
+',
+    'format' => 'html',
+    'substitute' => 1,
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = '3b758e64-74fb-4bf4-bd50-18703cb4bf57';
+  $display->content['new-3b758e64-74fb-4bf4-bd50-18703cb4bf57'] = $pane;
+  $display->panels['middle'][0] = 'new-3b758e64-74fb-4bf4-bd50-18703cb4bf57';
+  $pane = new stdClass();
+  $pane->pid = 'new-842ce6d9-d249-4ef2-9590-6d43b5e1759b';
+  $pane->panel = 'middle';
+  $pane->type = 'node';
+  $pane->subtype = 'node';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'nid' => '475',
+    'links' => 0,
+    'leave_node_title' => 0,
+    'identifier' => '',
+    'build_mode' => 'full',
+    'link_node_title' => 0,
+    'override_title' => 1,
+    'override_title_text' => '',
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 1;
+  $pane->locks = array();
+  $pane->uuid = '842ce6d9-d249-4ef2-9590-6d43b5e1759b';
+  $display->content['new-842ce6d9-d249-4ef2-9590-6d43b5e1759b'] = $pane;
+  $display->panels['middle'][1] = 'new-842ce6d9-d249-4ef2-9590-6d43b5e1759b';
+$display->hide_title = PANELS_TITLE_FIXED;
+$display->title_pane = 'new-3b758e64-74fb-4bf4-bd50-18703cb4bf57';
+$handler->conf['display'] = $display;
+$page->default_handlers[$handler->name] = $handler;
+$handler = new stdClass();
+$handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+$handler->api_version = 1;
+$handler->name = 'page_course_anmeldung_panel_context_3';
+$handler->task = 'page';
+$handler->subtask = 'course_anmeldung';
+$handler->handler = 'panel_context';
+$handler->weight = -28;
+$handler->conf = array(
+  'title' => 'ECDL Template',
+  'no_blocks' => 0,
+  'pipeline' => 'standard',
+  'body_classes_to_remove' => '',
+  'body_classes_to_add' => '',
+  'css_id' => '',
+  'css' => '',
+  'contexts' => array(),
+  'relationships' => array(
+    1 => array(
+      'identifier' => 'Course',
+      'keyword' => 'course',
+      'name' => 'entity_from_field:field_course-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    2 => array(
+      'identifier' => 'Location',
+      'keyword' => 'location',
+      'name' => 'entity_from_field:field_location-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    3 => array(
+      'identifier' => 'Segment',
+      'keyword' => 'segment',
+      'name' => 'entity_from_field:field_segment-node-taxonomy_term',
+      'delta' => 0,
+      'context' => 'relationship_entity_from_field:field_course-node-node_1',
+      'id' => 1,
+    ),
+  ),
+  'access' => array(
+    'plugins' => array(
+      0 => array(
+        'name' => 'node_type',
+        'settings' => array(
+          'type' => array(
+            'course_times' => 'course_times',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'node_status',
+        'settings' => NULL,
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      2 => array(
+        'name' => 'entity_field_value:node:course_times:field_template',
+        'settings' => array(
+          'field_template' => array(
+            'und' => array(
+              0 => array(
+                'value' => 'ecdl',
+              ),
+            ),
+          ),
+          'field_template_value' => array(
+            0 => 'ecdl',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
+  ),
+);
+$display = new panels_display();
+$display->layout = 'onecol';
+$display->layout_settings = array();
+$display->panel_settings = array(
+  'style_settings' => array(
+    'default' => NULL,
+    'middle' => NULL,
+  ),
+);
+$display->cache = array();
+$display->title = '%course:title';
+$display->uuid = 'aec7669e-a2b6-40d6-94d2-b0a7f4254e42';
+$display->content = array();
+$display->panels = array();
+  $pane = new stdClass();
+  $pane->pid = 'new-36577d6b-8e10-43b4-92b2-dc584c5c4764';
+  $pane->panel = 'middle';
+  $pane->type = 'custom';
+  $pane->subtype = 'custom';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'admin_title' => '',
+    'title' => '',
+    'body' => '<p><strong>%segment:name: %course:title</strong></p>
+
+<p>%node:body</p>
+
+<p>%node:field_course_date <strong>in</strong> %location:title</p>
+',
+    'format' => 'html',
+    'substitute' => 1,
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = '36577d6b-8e10-43b4-92b2-dc584c5c4764';
+  $display->content['new-36577d6b-8e10-43b4-92b2-dc584c5c4764'] = $pane;
+  $display->panels['middle'][0] = 'new-36577d6b-8e10-43b4-92b2-dc584c5c4764';
+  $pane = new stdClass();
+  $pane->pid = 'new-770b7a09-710a-4780-9adc-ec24c5f9474f';
+  $pane->panel = 'middle';
+  $pane->type = 'node';
+  $pane->subtype = 'node';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'nid' => '476',
+    'links' => 0,
+    'leave_node_title' => 0,
+    'identifier' => '',
+    'build_mode' => 'full',
+    'link_node_title' => 0,
+    'override_title' => 1,
+    'override_title_text' => '',
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 1;
+  $pane->locks = array();
+  $pane->uuid = '770b7a09-710a-4780-9adc-ec24c5f9474f';
+  $display->content['new-770b7a09-710a-4780-9adc-ec24c5f9474f'] = $pane;
+  $display->panels['middle'][1] = 'new-770b7a09-710a-4780-9adc-ec24c5f9474f';
+$display->hide_title = PANELS_TITLE_FIXED;
+$display->title_pane = 'new-36577d6b-8e10-43b4-92b2-dc584c5c4764';
+$handler->conf['display'] = $display;
+$page->default_handlers[$handler->name] = $handler;
+$handler = new stdClass();
+$handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+$handler->api_version = 1;
+$handler->name = 'page_course_anmeldung__sales_funnel';
+$handler->task = 'page';
+$handler->subtask = 'course_anmeldung';
+$handler->handler = 'panel_context';
+$handler->weight = -27;
+$handler->conf = array(
+  'title' => 'Sales Funnel Template',
+  'no_blocks' => 0,
+  'pipeline' => 'standard',
+  'body_classes_to_remove' => '',
+  'body_classes_to_add' => '',
+  'css_id' => '',
+  'css' => '',
+  'contexts' => array(),
+  'relationships' => array(
+    0 => array(
+      'identifier' => 'Course',
+      'keyword' => 'course',
+      'name' => 'entity_from_field:field_course-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    1 => array(
+      'identifier' => 'Location',
+      'keyword' => 'location',
+      'name' => 'entity_from_field:field_location-node-node',
+      'delta' => 0,
+      'context' => 'argument_entity_id:node_1',
+      'id' => 1,
+    ),
+    2 => array(
+      'identifier' => 'Segment',
+      'keyword' => 'segment',
+      'name' => 'entity_from_field:field_segment-node-taxonomy_term',
+      'delta' => 0,
+      'context' => 'relationship_entity_from_field:field_course-node-node_1',
+      'id' => 1,
+    ),
+  ),
+  'name' => 'sales_funnel',
+  'access' => array(
+    'logic' => 'and',
+    'plugins' => array(
+      0 => array(
+        'name' => 'node_type',
+        'settings' => array(
+          'type' => array(
+            'course_times' => 'course_times',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'node_status',
+        'settings' => NULL,
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+      2 => array(
+        'name' => 'entity_field_value:node:course_times:field_template',
+        'settings' => array(
+          'field_template' => array(
+            'und' => array(
+              0 => array(
+                'value' => 'salesfunnel',
+              ),
+            ),
+          ),
+          'field_template_value' => array(
+            0 => 'salesfunnel',
+          ),
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'not' => FALSE,
+      ),
+    ),
+  ),
+);
+$display = new panels_display();
+$display->layout = 'onecol';
+$display->layout_settings = array();
+$display->panel_settings = array(
+  'style_settings' => array(
+    'default' => NULL,
+    'middle' => NULL,
+  ),
+);
+$display->cache = array();
+$display->title = '%course:title';
+$display->uuid = 'f06bdf59-a3ea-4f12-a5e6-f872df0cf4f3';
+$display->content = array();
+$display->panels = array();
+  $pane = new stdClass();
+  $pane->pid = 'new-e326bd12-756d-409a-95a0-90d79b49e7e9';
+  $pane->panel = 'middle';
+  $pane->type = 'custom';
+  $pane->subtype = 'custom';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'admin_title' => 'Form header',
+    'title' => '',
+    'body' => '<p>Füllen Sie bitte das unten stehende Formular aus. Die Felder mit einem <span class="required">*</span> sind Pflichtfelder. Die Anmeldung ist provisorisch und wird Ihnen per E-Mail bestätigt.</p>
+<p>&nbsp;</p>
+<p><strong class="segment_%segment:tid">%segment:name:</strong> %course:title</p>
+<p>%node:body</p>
+<p>%node:field_course_date <strong>in</strong> %location:title</p>
+',
+    'format' => 'html',
+    'substitute' => 1,
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = 'e326bd12-756d-409a-95a0-90d79b49e7e9';
+  $display->content['new-e326bd12-756d-409a-95a0-90d79b49e7e9'] = $pane;
+  $display->panels['middle'][0] = 'new-e326bd12-756d-409a-95a0-90d79b49e7e9';
+  $pane = new stdClass();
+  $pane->pid = 'new-47e52399-7072-422e-b1d6-bd7bd082f46a';
+  $pane->panel = 'middle';
+  $pane->type = 'custom';
+  $pane->subtype = 'custom';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'admin_title' => 'RemoteForm',
+    'title' => '',
+    'body' => '<p><iframe id="if-anmeldung" scrolling="yes" src="https://salesfunnel.hso.ch/sf/Registration/?df=%node:field-internal-id" frameborder="0" align="left" width="100%"></iframe></p>
+',
+    'format' => 'html',
+    'substitute' => 1,
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 1;
+  $pane->locks = array();
+  $pane->uuid = '47e52399-7072-422e-b1d6-bd7bd082f46a';
+  $display->content['new-47e52399-7072-422e-b1d6-bd7bd082f46a'] = $pane;
+  $display->panels['middle'][1] = 'new-47e52399-7072-422e-b1d6-bd7bd082f46a';
+$display->hide_title = PANELS_TITLE_FIXED;
+$display->title_pane = '0';
+$handler->conf['display'] = $display;
+$page->default_handlers[$handler->name] = $handler;
