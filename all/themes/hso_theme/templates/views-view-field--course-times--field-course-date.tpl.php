@@ -11,7 +11,7 @@
 	if ($link) {
     if (!empty($row->field_field_anmeldungs_link) && !empty($row->field_field_anmeldungs_link[0]['raw']['value'])) {
       // if Anmeldungs link is available, set this link
-      $output = l(t('Anzeigen'), $row->field_field_anmeldungs_link[0]['raw']['value'], array('html' => TRUE));
+      $output = l($output, $row->field_field_anmeldungs_link[0]['raw']['value'], array('html' => TRUE));
     } else {
       $output = l($output, 'node/' . $row->nid . '/anmeldung', array('html' => TRUE));
     }
