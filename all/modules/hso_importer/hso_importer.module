@@ -512,16 +512,12 @@ function _hso_process_location($location) {
  * @throws \Exception
  */
 function _hso_process_contact($contact) {
-  // update an imported contact only once
-	static $already_processed = array();
-	if (array_key_exists($contact->id, $already_processed)) {
-		return $already_processed[$contact->id];
-	}
-
   // load/create contact
 	$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'node')
 		->entityCondition('bundle', 'contact')
+    ->fieldCondition('field_course', 'target_id', $contact->course_nid)
+    ->fieldCondition('field_location', 'target_id', $contact->location_nid)
 		->fieldCondition('field_internal_id', 'value', $contact->id)
 		->range(0, 1);
 	$result = $query->execute();
@@ -555,7 +551,6 @@ function _hso_process_contact($contact) {
     $node = node_submit($node);
     node_save($node);
   }
-	$already_processed[$contact->id] = $node->nid;
 	return $node->nid;
 }
 
