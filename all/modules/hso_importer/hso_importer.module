@@ -192,12 +192,12 @@ function _hso_importer_brand_import($hso_importer, $departments_mapping, $brand_
 
       foreach ($courses as $course) {
         $course->segment_tid = $segment_taxonomy_id;
+        $course_nid = _hso_process_course($course);
 
         // get course times for course
         $course_times = $hso_importer->getTimesOfCourseForBrand($brand_id, $course->id);
         if (count($course_times) > 0) {
-          // only import course when course times are available for it
-          $course_nid = _hso_process_course($course);
+          // only enable course when course times are available for it
           $imported_courses[] = $course->id;
           $courses_processed++;
 
@@ -368,7 +368,7 @@ function _hso_all_locations($locations) {
  * @param $segment_taxonomy_id  int     The taxonomy id of the segment
  */
 function _hso_unpublish_courses($imported_courses, $segment_taxonomy_id) {
-  $imported_courses = count($imported_courses) > 0 ? $imported_courses : array(0 => 0);
+  $imported_courses = count($imported_courses) > 0 ? $imported_courses : array(0 => -1);
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'course')
@@ -391,7 +391,7 @@ function _hso_unpublish_courses($imported_courses, $segment_taxonomy_id) {
  * @param $course_nid             int     Node id of course
  */
 function _hso_cleanup_course_times($imported_course_times, $course_nid) {
-  $imported_course_times = count($imported_course_times) > 0 ? $imported_course_times : array(0 => 0);
+  $imported_course_times = count($imported_course_times) > 0 ? $imported_course_times : array(0 => -1);
   foreach ($imported_course_times as $location_nid => $course_times) {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
@@ -415,7 +415,7 @@ function _hso_cleanup_course_times($imported_course_times, $course_nid) {
  * @throws \Exception
  */
 function _hso_cleanup_contacts($imported_contacts, $course_nid) {
-  $imported_contacts = count($imported_contacts) > 0 ? $imported_contacts : array(0 => 0);
+  $imported_contacts = count($imported_contacts) > 0 ? $imported_contacts : array(0 => -1);
   foreach ($imported_contacts as $location_nid => $contacts) {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
@@ -540,7 +540,9 @@ function _hso_process_contact($contact) {
 	$node->field_phone[LANGUAGE_NONE][0]['value'] = $contact->phone;
 	$node->field_email[LANGUAGE_NONE][0]['email'] = $contact->email;
 	$node->field_location[LANGUAGE_NONE][0]['target_id'] = $contact->location_nid;
-	$node->field_segment[LANGUAGE_NONE][] = array('tid' => $contact->segment_tid);
+  if (!empty($contact->segment_tid)) {
+    $node->field_segment[LANGUAGE_NONE][0]['tid'] = $contact->segment_tid;
+  }
   $node->field_course[LANGUAGE_NONE][0]['target_id'] = $contact->course_nid;
   // contact picture
   if ($file = _hso_get_contact_picture($contact)) {
@@ -621,7 +623,9 @@ function _hso_process_course($course) {
   // update all imported fields of node
 	$node->title = $course->title;
   $node->field_internal_id[LANGUAGE_NONE][0]['value'] = $course->id;
-  $node->field_segment[LANGUAGE_NONE][] = array('tid' => $course->segment_tid);
+  if (!empty($course->segment_tid)) {
+    $node->field_segment[LANGUAGE_NONE][0]['tid'] = $course->segment_tid;
+  }
 	$node->field_is_module[LANGUAGE_NONE][0]['value'] = !empty($course->is_module) ? 1 : 0;
 	if (!empty($course->meta->title)) {
 		$node->metatags['title']['value'] = $course->meta->title;
