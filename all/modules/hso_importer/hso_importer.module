@@ -129,6 +129,7 @@ function _hso_importer_run_import() {
 
     if ($brand_id > 0) {
       $result = _hso_importer_brand_import($hso_importer, $departments_mapping, $brand_id);
+      watchdog('HSO Importer', 'Result returned: ' . implode('; ', $result), array(), WATCHDOG_DEBUG);
 
     } else {
       // no brand set, return with error
@@ -136,6 +137,7 @@ function _hso_importer_run_import() {
     }
 
   } catch (Exception $ex) {
+    watchdog('HSO Importer',$ex->getMessage(), array(), WATCHDOG_DEBUG);
     drupal_set_message($ex->getMessage(), 'error');
   }
 
