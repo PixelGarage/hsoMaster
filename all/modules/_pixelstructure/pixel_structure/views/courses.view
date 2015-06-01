@@ -1,0 +1,143 @@
+<?php
+
+$view = new view();
+$view->name = 'courses';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'node';
+$view->human_name = 'Courses';
+$view->core = 7;
+$view->api_version = '3.0';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['use_more_always'] = FALSE;
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['style_plugin'] = 'list';
+$handler->display->display_options['style_options']['grouping'] = array(
+  0 => array(
+    'field' => 'field_fachgebiet',
+    'rendered' => 1,
+    'rendered_strip' => 0,
+  ),
+);
+$handler->display->display_options['row_plugin'] = 'fields';
+/* Relationship: Content: Taxonomy terms on node */
+$handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
+$handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
+$handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
+$handler->display->display_options['relationships']['term_node_tid']['label'] = 'Menu Group';
+$handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
+  'menugroup' => 'menugroup',
+  'brands' => 0,
+  'centers' => 0,
+  'segments' => 0,
+  'tags' => 0,
+);
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['label'] = '';
+$handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+$handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+/* Sort criterion: Content: Menu-Group (field_fachgebiet) */
+$handler->display->display_options['sorts']['field_fachgebiet_tid']['id'] = 'field_fachgebiet_tid';
+$handler->display->display_options['sorts']['field_fachgebiet_tid']['table'] = 'field_data_field_fachgebiet';
+$handler->display->display_options['sorts']['field_fachgebiet_tid']['field'] = 'field_fachgebiet_tid';
+/* Sort criterion: Content: Title */
+$handler->display->display_options['sorts']['title']['id'] = 'title';
+$handler->display->display_options['sorts']['title']['table'] = 'node';
+$handler->display->display_options['sorts']['title']['field'] = 'title';
+/* Contextual filter: Content: Segment (field_segment) */
+$handler->display->display_options['arguments']['field_segment_tid']['id'] = 'field_segment_tid';
+$handler->display->display_options['arguments']['field_segment_tid']['table'] = 'field_data_field_segment';
+$handler->display->display_options['arguments']['field_segment_tid']['field'] = 'field_segment_tid';
+$handler->display->display_options['arguments']['field_segment_tid']['default_action'] = 'default';
+$handler->display->display_options['arguments']['field_segment_tid']['default_argument_type'] = 'taxonomy_tid';
+$handler->display->display_options['arguments']['field_segment_tid']['default_argument_options']['node'] = TRUE;
+$handler->display->display_options['arguments']['field_segment_tid']['default_argument_options']['limit'] = TRUE;
+$handler->display->display_options['arguments']['field_segment_tid']['default_argument_options']['vocabularies'] = array(
+  'segments' => 'segments',
+);
+$handler->display->display_options['arguments']['field_segment_tid']['summary']['number_of_records'] = '0';
+$handler->display->display_options['arguments']['field_segment_tid']['summary']['format'] = 'default_summary';
+$handler->display->display_options['arguments']['field_segment_tid']['summary_options']['items_per_page'] = '25';
+/* Filter criterion: Content: Published */
+$handler->display->display_options['filters']['status']['id'] = 'status';
+$handler->display->display_options['filters']['status']['table'] = 'node';
+$handler->display->display_options['filters']['status']['field'] = 'status';
+$handler->display->display_options['filters']['status']['value'] = 1;
+$handler->display->display_options['filters']['status']['group'] = 1;
+$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'course' => 'course',
+);
+
+/* Display: Block */
+$handler = $view->new_display('block', 'Block', 'block');
+$handler->display->display_options['defaults']['sorts'] = FALSE;
+/* Sort criterion: Content: Title */
+$handler->display->display_options['sorts']['title']['id'] = 'title';
+$handler->display->display_options['sorts']['title']['table'] = 'node';
+$handler->display->display_options['sorts']['title']['field'] = 'title';
+
+/* Display: Menu Block */
+$handler = $view->new_display('block', 'Menu Block', 'block_1');
+$handler->display->display_options['defaults']['style_plugin'] = FALSE;
+$handler->display->display_options['style_plugin'] = 'list';
+$handler->display->display_options['style_options']['grouping'] = array(
+  0 => array(
+    'field' => 'field_fachgebiet',
+    'rendered' => 1,
+    'rendered_strip' => 0,
+  ),
+);
+$handler->display->display_options['defaults']['style_options'] = FALSE;
+$handler->display->display_options['defaults']['row_plugin'] = FALSE;
+$handler->display->display_options['row_plugin'] = 'fields';
+$handler->display->display_options['defaults']['row_options'] = FALSE;
+$handler->display->display_options['defaults']['fields'] = FALSE;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['label'] = '';
+$handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+$handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+/* Field: Content: Menu-Group */
+$handler->display->display_options['fields']['field_fachgebiet']['id'] = 'field_fachgebiet';
+$handler->display->display_options['fields']['field_fachgebiet']['table'] = 'field_data_field_fachgebiet';
+$handler->display->display_options['fields']['field_fachgebiet']['field'] = 'field_fachgebiet';
+$handler->display->display_options['fields']['field_fachgebiet']['label'] = '';
+$handler->display->display_options['fields']['field_fachgebiet']['exclude'] = TRUE;
+$handler->display->display_options['fields']['field_fachgebiet']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['field_fachgebiet']['type'] = 'taxonomy_term_reference_plain';
+$handler->display->display_options['defaults']['sorts'] = FALSE;
+/* Sort criterion: Taxonomy term: Weight (field_weight) */
+$handler->display->display_options['sorts']['field_weight_value']['id'] = 'field_weight_value';
+$handler->display->display_options['sorts']['field_weight_value']['table'] = 'field_data_field_weight';
+$handler->display->display_options['sorts']['field_weight_value']['field'] = 'field_weight_value';
+$handler->display->display_options['sorts']['field_weight_value']['relationship'] = 'term_node_tid';
+$translatables['courses'] = array(
+  t('Master'),
+  t('more'),
+  t('Apply'),
+  t('Reset'),
+  t('Sort by'),
+  t('Asc'),
+  t('Desc'),
+  t('Menu Group'),
+  t('All'),
+  t('Block'),
+  t('Menu Block'),
+);

@@ -5,25 +5,26 @@
   $firstRowId = key($rows);  // id of first row in group
 
   // term id of first row in group
-  //(Lehrgänge = 61, Management und Führung=62, Marketing und Verkauf=63, Organisation und Personal=64,
+  //(Lehrgänge = 63, Management und Führung=62, Marketing und Verkauf=63, Organisation und Personal=64,
   // Finanzen=65, Höhere Fachschule = 66, Fachhochschule=67)
   $columnClass = ' class = "menu-view-column-';
-  if ($title === 'Lehrgänge' || $title === 'Management und Führung' || $title === 'Marketing und Verkauf') {
+  if ($title === 'Lehrgänge' || $title === 'Management und Organisation' || $title === 'Leadership und Personal') {
     $columnClass .= '1">';
-  } elseif ($title === 'Organisation und Personal' || $title === 'Finanzen' || $title === 'Prüfungstrainings') {
+  } elseif ($title === 'Finanzen' || $title === 'Marketing, Verkauf u. Tourismus') {
     $columnClass .= '2">';
-  } else {
+  } else if ($title === 'Diplomstudium HF' || $title === 'Bachelor-Studium' || $title === 'Nachdiplomstudiengänge HF'){
     $columnClass .= '3">';
   }
   // create prefix with column class and print it
   $list_type_prefix .= $columnClass;
   print $list_type_prefix;
 ?>
-  <?php if ($title === 'Management und Führung'): ?>
+  <?php if ($title === 'Management und Organisation'): ?>
     <li class="nolink-main clearfix"><?php print "Berufsakademie"; ?></li>
     <li class="nolink clearfix"><?php print $title; ?></li>
-  <?php elseif ($title === 'Höhere Fachschule' || $title === 'Fachhochschule'): ?>
-    <li class="nolink-main clearfix"><?php print $title; ?></li>
+  <?php elseif ($title === 'Diplomstudium HF'): ?>
+    <li class="nolink-main clearfix"><?php print "Höhere Fachschule für Wirtschaft"; ?></li>
+    <li class="nolink clearfix"><?php print $title; ?></li>
   <?php else: ?>
     <li class="nolink clearfix"><?php print $title; ?></li>
   <?php endif; ?>

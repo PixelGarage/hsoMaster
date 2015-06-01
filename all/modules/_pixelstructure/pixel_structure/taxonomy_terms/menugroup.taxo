@@ -1,0 +1,109 @@
+<?php
+$export_time = 1432915932;
+$data = array(
+  'bundles' => array(
+    'menugroup' => (object) array(
+      'vid' => '4',
+      'name' => 'Menu-Group',
+      'machine_name' => 'menugroup',
+      'description' => '',
+      'hierarchy' => '0',
+      'module' => 'taxonomy',
+      'weight' => '0',
+      'bc_entity_type' => 'taxonomy_term',
+    ),
+  ),
+  'fields' => array(
+    'field_weight' => array(
+      'translatable' => '0',
+      'entity_types' => array(),
+      'settings' => array(),
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_weight' => array(
+                'value' => 'field_weight_value',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_weight' => array(
+                'value' => 'field_weight_value',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'field_name' => 'field_weight',
+      'type' => 'number_integer',
+      'module' => 'number',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'int',
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'taxonomy_term' => array(
+          0 => 'menugroup',
+        ),
+      ),
+    ),
+  ),
+  'instances' => array(
+    'field_weight' => array(
+      0 => array(
+        'label' => 'Weight',
+        'widget' => array(
+          'weight' => '1',
+          'type' => 'number',
+          'module' => 'number',
+          'active' => 0,
+          'settings' => array(),
+        ),
+        'settings' => array(
+          'min' => '',
+          'max' => '',
+          'prefix' => '',
+          'suffix' => '',
+          'user_register_form' => FALSE,
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'number_integer',
+            'settings' => array(
+              'thousand_separator' => ' ',
+              'decimal_separator' => '.',
+              'scale' => 0,
+              'prefix_suffix' => TRUE,
+            ),
+            'module' => 'number',
+            'weight' => 0,
+          ),
+        ),
+        'required' => 0,
+        'description' => 'Sorts items (lower values means higher up in list)',
+        'default_value' => array(
+          0 => array(
+            'value' => '0',
+          ),
+        ),
+        'field_name' => 'field_weight',
+        'entity_type' => 'taxonomy_term',
+        'bundle' => 'menugroup',
+        'deleted' => '0',
+      ),
+    ),
+  ),
+);
