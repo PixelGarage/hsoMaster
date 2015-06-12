@@ -11,6 +11,38 @@ function hso_theme_alpha_preprocess_html(&$vars) {
 	drupal_add_html_head($meta, 'alpha-viewport');
   drupal_add_js('//platform.twitter.com/widgets.js', 'external');
   drupal_add_css('http://fast.fonts.com/cssapi/8d596996-b655-44b0-bd53-092653f91ba8.css', 'external');
+
+  //
+  // add adwebster pixel on kvcollege and handelsschule
+  if (in_array('kvcollege_section', $vars['classes_array'])) {
+    $ad_webster = <<<AdWebster
+<!-- Begin ADWEBSTER.COM -->
+<!-- img src="http://targeting.adwebster.com/img/bh.gif?n=1301&g=20&a=2267&s=1&l=1&t=i&f=1" width="1" height="1" border="0" -->
+<img src="https://secure.adwebster.com/img/bh.gif?n=1301&g=20&a=2267&s=1&l=1&t=i&f=1" width="1" height="1" border="0" >
+<!-- end ADWEBSTER.COM   -->
+AdWebster;
+    $vars['page']['page_bottom']['ad_webster'] = array(
+      '#type' => 'markup',
+      '#weight' => -100,
+      '#markup' => $ad_webster
+    );
+
+  } else if (in_array('hscollege_section', $vars['classes_array'])) {
+    $ad_webster = <<<AdWebster
+<!-- Begin ADWEBSTER.COM -->
+<!--img src="http://targeting.adwebster.com/img/bh.gif?n=1301&g=20&a=2266&s=1&l=1&t=i&f=1" width="1" height="1" border="0" -->
+<img src="https://secure.adwebster.com/img/bh.gif?n=1301&g=20&a=2266&s=1&l=1&t=i&f=1" width="1" height="1" border="0" >
+<!-- end ADWEBSTER.COM   -->
+AdWebster;
+    $vars['page']['page_bottom']['ad_webster'] = array(
+      '#type' => 'markup',
+      '#weight' => -100,
+      '#markup' => $ad_webster
+    );
+  }
+
+  //
+  // add facebook script on front page
   if (drupal_is_front_page()) {
 		$fb_js = <<<FS_JS
 <div id="fb-root"></div>
@@ -29,6 +61,7 @@ FS_JS;
 		);
 	}
 
+  //
   // add remarketing code to all pages
   $js_js = <<<JS_JS
 <script type="text/javascript">
@@ -52,4 +85,5 @@ JS_JS;
 		  '#weight' => -100,
 		  '#markup' => $js_js
 	  );
+
 }
