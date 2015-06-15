@@ -2191,6 +2191,10 @@ body.excollege_section #block-block-3 a.anmelden_button {
   white-space: nowrap;
   line-height: 25px;
 }
+.view-course-tabs #startdaten .view-course-times table tbody tr .views-field-field-brand {
+  vertical-align: middle;
+  text-align: center;
+}
 body.kvcollege_section .view-course-tabs .ui-tabs {
   background: transparent url(../images/kv_bg_tabs.jpg) no-repeat 0 1px;
 }
