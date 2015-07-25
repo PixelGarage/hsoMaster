@@ -382,8 +382,8 @@ function _hso_make_h4i($course, $course_time_node, $webform_components, $submiss
 function _hso_add_pdf_header(&$pdf_document, $context) {
   if ($context['client_copy'] == 'yes') {
     // draw Logo top right, if document is for client
-    $image_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/template_logo_' . $context['brand'] . '.png';
-    $pdf_document->Image($image_file, 5, 10, 30, '', '', '', 'T', 2, 300, 'R');
+    $image_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/template_logo_' . $context['brand'] . '.jpg';
+    $pdf_document->Image($image_file, 5, 10, 30, 0, '', '', 'T', 2, 300, 'R');
   }
 }
 

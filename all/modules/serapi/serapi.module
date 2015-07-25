@@ -13,7 +13,7 @@
  */
 function serapi_get_search($referer = '') {
   if (!$referer) {
-    if (!isset($_SERVER['HTTP_REFERER'])) {
+    if (empty($_SERVER['HTTP_REFERER'])) {
       return FALSE;
     }
     $referer = $_SERVER['HTTP_REFERER'];
