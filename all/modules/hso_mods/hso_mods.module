@@ -177,13 +177,21 @@ function hso_mods_theme() {
 
 function theme_hso_mods_formatter_hso_mods_date_vom_bis($element) {
 	$from_date = strtotime($element['element']['value']);
-	$string = '<strong>' . t('Since') . '</strong> ';
+  $date_start = explode(' ', $element['element']['value']);
+  $date_end = explode(' ', $element['element']['value2']);
+  $has_end_date = ($date_start[0] != $date_end[0]);
+
+  if ($has_end_date) {
+    $string = '<strong>' . t('Since') . '</strong> ';
+  } else {
+    $string = '<strong>' . t('On') . '</strong> ';
+  }
 	if (date('H:i', $from_date) == '00:00') {
 		$string .= date('d.m.Y', $from_date);
 	} else {
-		$string .= date('d.m.Y H:i', $from_date);
+		$string .= date('d.m.Y, H:i', $from_date);
 	}
-	if ($element['element']['value2']) {
+	if ($has_end_date) {
 		$string .= ' <strong>' . t('Until') . '</strong> ' . date('d.m.Y', strtotime($element['element']['value2']));
 	}
   return $string;
