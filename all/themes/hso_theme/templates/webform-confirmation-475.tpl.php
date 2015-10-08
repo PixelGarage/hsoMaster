@@ -43,6 +43,40 @@ if ($course_time_nid) {
 
   <p><a href="<?php print url('node/' . $course->nid); ?>">Wieder zurück zum Kurs/Lehrgang</a></p>
 </div>
+
+<?php if ($course_time_nid): ?>
+  <script type="text/javascript">
+    // check existance (opt-out doesn't create ga)
+    if (typeof ga == 'function') {
+      // Load the ecommerce plug-in.
+      ga('require', 'ecommerce');
+
+      // add transaction
+      ga('ecommerce:addTransaction', {
+        'id': '<?php print $sid; ?>-<?php print $submission->remote_addr; ?>',    // Transaction ID. Required
+        'affiliation': 'HSO <?php print addslashes($location->title); ?>',        // Affiliation or store name
+        'revenue': '<?php print $tracking_price; ?>',                             // Grand Total
+        'shipping': '0',                                                          // Shipping
+        'tax': '0.0'                                                              // Tax
+      });
+
+      // add ecommerce item
+      ga('ecommerce:addItem', {
+        'id': '<?php print $sid; ?>-<?php print $submission->remote_addr; ?>',    // Transaction ID. Required
+        'name': '<?php print addslashes($course->title); ?>',                     // Product name. Required
+        'sku': '<?php print $course_time_node->field_internal_id[LANGUAGE_NONE][0]['value']; ?>', // SKU/code
+        'category': '<?php print addslashes($segment->name); ?>',                 // Category or variation
+        'price': '<?php print $tracking_price; ?>',                               // Unit price
+        'quantity': '1'                                                           // Quantity
+      });
+
+      // submit transaction
+      ga('ecommerce:send');      // Send transaction and item data to Google Analytics.
+    }
+  </script>
+<?php endif; ?>
+
+
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<?php print variable_get('googleanalytics_account', ''); ?>']);
@@ -66,6 +100,9 @@ if ($course_time_nid) {
   ]);
   _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 </script>
+
+
+
 <script src="http://cdn.cxense.com/cx.js" type="text/javascript"></script>
 <script>cX.library.setCustomParameters({'u_hsoch':'hsosignoff'});</script>
 <div id="cX-root" style="display:none"></div>
