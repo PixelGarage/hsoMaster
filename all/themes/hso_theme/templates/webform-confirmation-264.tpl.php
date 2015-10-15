@@ -76,18 +76,3 @@ if ($course_time_nid) {
 </script>
 <?php endif; ?>
 
-
-<script src="http://cdn.cxense.com/cx.js" type="text/javascript"></script>
-<script>cX.library.setCustomParameters({'u_hsoch':'hsosignoff'});</script>
-<div id="cX-root" style="display:none"></div>
-<script type="text/javascript">
-var cX = cX || {}; cX.callQueue = cX.callQueue || [];
-cX.callQueue.push(['setSiteId', '9222314110606567882']);
-cX.callQueue.push(['sendPageViewEvent']);
-</script>
-<script type="text/javascript">
-(function() { try { var scriptEl = document.createElement('script'); scriptEl.type = 'text/javascript'; scriptEl.async = 'async';
-scriptEl.src = ('https:' == document.location.protocol) ? 'https://scdn.cxense.com/cx.js' : 'http://cdn.cxense.com/cx.js';
-var targetEl = document.getElementsByTagName('script')[0]; targetEl.parentNode.insertBefore(scriptEl, targetEl); } catch (e) {};} ());
-</script>
-
