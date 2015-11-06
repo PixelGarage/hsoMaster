@@ -2174,6 +2174,9 @@ body.excollege_section #block-block-3 a.anmelden_button {
   color: #000;
   font-family: 'Soho Gothic W01 Regular', Helvetica, Arial, sans-serif;
 }
+.view-course-tabs #startdaten .view-course-times table tbody tr .views-field-body p {
+  font-size: 13px;
+}
 .view-course-tabs #startdaten .view-course-times table tbody tr .views-field-nothing {
   vertical-align: middle;
 }
