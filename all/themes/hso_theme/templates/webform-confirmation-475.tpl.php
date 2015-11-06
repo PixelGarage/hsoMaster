@@ -75,28 +75,3 @@ if ($course_time_nid) {
     }
   </script>
 <?php endif; ?>
-
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<?php print variable_get('googleanalytics_account', ''); ?>']);
-	_gaq.push(['_addTrans',
-    '<?php print $sid; ?>-<?php print $submission->remote_addr; ?>', // transaction ID - required
-    'European <?php print addslashes($location->title); ?>', // affiliation or store name
-    '<?php print $tracking_price; ?>', // total - required
-    '0', // tax
-    '0', // shipping
-    '<?php print addslashes($location->title); ?>', // city
-    'XX', // state or province
-    'CH' // country
-  ]);
-  _gaq.push(['_addItem',
-    '<?php print $sid; ?>-<?php print $submission->remote_addr; ?>', // transaction ID - required
-    '<?php print $course_time_node->field_internal_id[LANGUAGE_NONE][0]['value']; ?>', // SKU/code - required
-    '<?php print addslashes($course->title); ?>', // product name
-    '<?php print addslashes($segment->name); ?>', // category or variation
-    '<?php print $tracking_price; ?>', // unit price - required
-    '1' // quantity - required
-  ]);
-  _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
-</script>
