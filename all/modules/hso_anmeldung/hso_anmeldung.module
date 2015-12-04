@@ -430,7 +430,7 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
   	$course = node_load($course_time_node->field_course[LANGUAGE_NONE][0]['target_id']);
   	$form['submitted']['course_times_nid']['#value'] = $course_time_node->nid;
   	$segment = !empty($course->field_segment) ? taxonomy_term_load($course->field_segment[LANGUAGE_NONE][0]['tid']) : FALSE;
-  	$agb_nid = 1036;
+  	$agb_nid = 1463;
     $text = '';
 
     // get AGB nid
