@@ -1,0 +1,87 @@
+/*
+ *  Prospekt-block component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.specific-webform-block (@seg-color) {
+  h2.block-title {
+    background: @seg-color no-repeat 0 0;
+    padding-left: 20px;
+  }
+
+  #webform-client-form-12649 {
+    .form-actions {
+      .form-submit {
+        background-color: @seg-color;
+      }
+    }
+  }
+}
+
+
+
+// General settings
+// -------------------------
+#block-webform-client-block-12649 {
+  margin-bottom: 20px;
+
+  h2.block-title {
+    padding: 15px 15px 15px 40px;
+    height: 20px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 20px;
+  }
+
+  #webform-client-form-12649 {
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-top-color: #fff;
+
+    .webform-component {
+      >label {
+        display: inline-block;
+        margin-right: 0;
+        width: 80px;
+      }
+
+      input.form-text {
+        width: 60%;
+      }
+    }
+
+    .form-actions {
+      .form-submit {
+        margin: 10px 0;
+        padding: 0 20px;
+        height: 35px;
+        font-family: @font-family-regular;
+        font-size: 14px;
+        color: #fff;
+        background: @branding-bg;
+        border: none;
+      }
+    }
+
+  }
+
+  body.kvcollege_section & {
+    .specific-webform-block(@hso-kv-college);
+  }
+  body.hscollege_section & {
+    .specific-webform-block(@hso-handelsschule);
+  }
+  body.kscollege_section & {
+    .specific-webform-block(@hso-kaderschule);
+  }
+  body.excollege_section & {
+    .specific-webform-block(@hso-executive);
+  }
+}
+
+

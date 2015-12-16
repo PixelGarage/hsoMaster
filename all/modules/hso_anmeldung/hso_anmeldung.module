@@ -18,31 +18,66 @@ function hso_anmeldung_menu() {
     'page arguments' => array(1),
     'type' => MENU_CALLBACK,
   );
+  // dynamically loaded select boxes in brochure form
+  $items['get_graduations/%'] = array(
+    'title' => 'Get graduations of selected segment',
+    //'access callback' => TRUE,
+    'access arguments' => array('access content'),
+    'page callback' => '_hso_get_graduations_callback',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['get_courses/%/%'] = array(
+    'title' => 'Get all courses of selected education degree',
+    'access callback' => TRUE,
+    'page callback' => '_hso_get_courses_callback',
+    'page arguments' => array(1,2),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
 /**
- * Downloads the pdf-anmeldung contract with the given hash.
+ * Downloads / shows the pdf with the given file name from the private folder.
  *
- * @param $hash
+ * @param string $pdf_uri						A stream, referenced as "scheme://target".
+ * @param string $filename          The filename of the downloaded file.
+ * @param bool   $show_file_inline  Flag, if TRUE shows the file inline (in the browser), otherwise downloads the file to the client.
+ * @param int    $valid_duration		Duration during which the file is valid (default: -1 meaning no time limit)
+ */
+function hso_anmeldung_transfer_pdf($pdf_uri, $filename, $show_file_inline = false, $valid_duration = -1) {
+  // get stream wrapper instance for pdf
+  $stream_wrapper = file_stream_wrapper_get_instance_by_uri($pdf_uri);
+  $pdf_path = $stream_wrapper->realpath();
+
+  if (file_exists($pdf_path)) {
+    if ($valid_duration < 0 || filemtime($pdf_path) >= time() - $valid_duration) {
+      $content_dispo = $show_file_inline ? 'inline' : 'attachment';
+      $content_dispo .= '; filename="' . $filename . '"';
+      file_transfer($pdf_uri, array(
+        'Cache-control'       => 'private',
+        'Content-Type'        => 'application/pdf', // 'application/octet-stream'
+        'Content-Disposition' => $content_dispo,
+        'Content-Length' => filesize($pdf_path)
+      ));
+    }
+  }
+  drupal_not_found();
+  drupal_exit();
+}
+
+/**
+ * Menu callback of a PDF download request.
+ *
+ * @param $hash	string 	Unique string indicating the contract pdf to be downloaded.
  */
 function _hso_get_anmeldung_pdf($hash) {
-	if (preg_match('/^[a-z0-9]{32}$/i', $hash)) {
-    $dir_uri = file_stream_wrapper_get_instance_by_uri('private://anmeldung');
-		$pdf = $dir_uri->realpath() . '/anmeldung_logo_' . $hash . '.pdf';
-		if (file_exists($pdf)) {
-			if (filemtime($pdf) >= time() - 28 * 86400) {
-				file_transfer('private://anmeldung/anmeldung_logo_' . $hash . '.pdf', array(
-					'Cache-control'       => 'private',
-					'Content-Type'        => 'application/octet-stream',
-					'Content-Disposition' => 'attachment; filename="Ausbildungsvertrag.pdf"',
-					'Content-Length' => filesize($pdf)
-				));
-			}
-		}
-	}
-	drupal_not_found();
-	drupal_exit();
+  if (preg_match('/^[a-z0-9]{32}$/i', $hash)) {
+    $pdf = 'private://anmeldung/anmeldung_logo_' . $hash . '.pdf';
+    hso_anmeldung_transfer_pdf($pdf, 'Ausbildungsvertrag.pdf', false, 28 * 86400);
+  }
+  drupal_not_found();
+  drupal_exit();
 }
 
 /**
@@ -72,6 +107,71 @@ function _hso_redirect_salesfunnel_call($times_int_id) {
 
   //TODO: implement redirect with submitted parameters
   drupal_goto('node/' . $nid . '/anmeldung');
+}
+
+/**
+ * Get all graduations of the specific segment.
+ *
+ * @param $segment_tid  int The term id of the segment.
+ *
+ * @return string
+ */
+function _hso_get_graduations_callback($segment_tid) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_segment', 'tid', $segment_tid);
+  $result = $query->execute();
+  $options = '<option value="-1" selected="selected">' . t('- Wähle einen Abschluss -') . "</option>\n";
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $courses = node_load_multiple($nids);
+
+    $tids = array();
+    foreach ($courses as $course) {
+      $tids[$course->field_fachgebiet[LANGUAGE_NONE][0]['tid']] = $course->field_fachgebiet[LANGUAGE_NONE][0]['tid'];
+    }
+    $graduations = taxonomy_term_load_multiple($tids);
+
+    foreach ($graduations as $graduation) {
+      $options .= '<option value="' . check_plain($graduation->tid) . '"">' . check_plain($graduation->name) . "</option>\n";
+    }
+  }
+  // output select options
+  drupal_add_http_header('Content-Type', 'text/html; charset=utf-8');
+  print $options;
+  drupal_exit();
+}
+
+/**
+ * Gets all courses of a specific education degree.
+ *
+ * @param $segment_tid	int The term id of the segment.
+ * @param $graduation  	int The term id of the graduation.
+ */
+function _hso_get_courses_callback($segment_tid, $graduation) {
+  // load courses
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_segment', 'tid', $segment_tid)
+    ->fieldCondition('field_fachgebiet', 'tid', $graduation);
+  $result = $query->execute();
+  $options = '<option value="-1" selected="selected">' . t('- Wähle einen Lehrgang -') . "</option>\n";
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $courses = node_load_multiple($nids);
+
+    foreach ($courses as $course) {
+      $options .= '<option value="' . check_plain($course->nid) . '"">' . check_plain($course->title) . "</option>\n";
+    }
+  }
+  // output select options
+  drupal_add_http_header('Content-Type', 'text/html; charset=utf-8');
+  print $options;
+  drupal_exit();
 }
 
 /* --------------------------------------------------
@@ -335,7 +435,6 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
 			$file->filename = $to_client ? 'ausbildungsvertrag.pdf' : 'anmeldung.pdf';
 		}
 		$file->filepath = variable_get('file_private_path') . '/anmeldung/' . $filename;
-		$file->filemime = 'application/pdf';
 		return $file;
 
   } else {
@@ -384,8 +483,8 @@ function _hso_make_h4i($course, $course_time_node, $webform_components, $submiss
 function _hso_add_pdf_header(&$pdf_document, $context) {
   if ($context['client_copy'] == 'yes') {
     // draw Logo top right, if document is for client
-    $image_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/template_logo_' . $context['brand'] . '.jpg';
-    $pdf_document->Image($image_file, 5, 10, 30, 0, '', '', 'T', 2, 300, 'R');
+    $image_file = drupal_get_path('module', 'hso_anmeldung') . '/html_templates/template_logo_' . $context['brand'] . '.png';
+    $pdf_document->Image($image_file, 5, 10, 30, '', '', '', 'T', 2, 300, 'R');
   }
 }
 
@@ -404,13 +503,34 @@ function _hso_add_pdf_footer(&$pdf_document, $context) {
  * HSO Anmeldung-Webform alteration
  * --------------------------------------------------*/
 
+function &hso_anmeldung_session_data() {
+  if (!isset($_SESSION['hso_anmeldung'])) {
+    $_SESSION['hso_anmeldung'] = array();
+  }
+  return $_SESSION['hso_anmeldung'];
+}
+
+
 /**
  * Implements hook_form_alter().
  *
  * Alters the anmeldung webforms with additional text.
 */
 function hso_anmeldung_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'webform_client_form_264' || $form_id == 'webform_client_form_475' || $form_id == 'webform_client_form_476') {
+  if ($form_id == 'webform_client_form_12649') {
+    // add course id to download leaflet form
+    if (arg(0) == 'node' && is_numeric(arg(1))) {
+      $session_data = &hso_anmeldung_session_data();
+      if (arg(1) != 12649) {
+        // called on course page load
+        $session_data['course_nid'] = arg(1);
+      } else {
+        //  called in form submit handler
+        $form['submitted']['course_nid']['#value'] = $session_data['course_nid'];
+      }
+    }
+
+  } else if ($form_id == 'webform_client_form_264' || $form_id == 'webform_client_form_475' || $form_id == 'webform_client_form_476') {
 		// extend all anmeldungs-forms (default, european, ecdl),
 		// but only if they are shown (url = node/nid/anmeldung)
 		if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) == 'anmeldung') {
@@ -620,4 +740,87 @@ function hso_anmeldung_component_edit_submit($form, &$form_state) {
   $form_state['values']['hso']['extra']['is_additional'] = NULL;
 }
 
+
+
+/* --------------------------------------------------
+ * Brochure Webform select option definition
+ * --------------------------------------------------*/
+
+/**
+ * Define a custom select list displaying all available courses.
+ *
+ */
+function hso_anmeldung_webform_select_options_info() {
+  $items = array();
+
+  $items['segments'] = array(
+    'title' => t('Segments'),
+    'options callback' => '_webform_select_options_taxonomy',
+    'options arguments' => array ('segments'),
+  );
+
+  $items['graduation'] = array(
+    'title' => t('Graduation'),
+    'options callback' => '_webform_select_options_taxonomy',
+    'options arguments' => array ('menugroup'),
+  );
+
+  $items['courses'] = array(
+    'title' => t('Courses'),
+    'options callback' => '_webform_select_options_entities',
+    'options arguments' => array ('course'),
+  );
+
+  return $items;
+}
+
+/**
+ * Creates a list of all available terms of a certain taxonomy.
+ */
+function _webform_select_options_taxonomy ($component, $flat, $filter, $arguments) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'taxonomy_term')
+    ->entityCondition('bundle', $arguments[0]);
+  $result = $query->execute();
+  if (isset($result['taxonomy_term'])) {
+    $tids = array_keys($result['taxonomy_term']);
+    $terms = taxonomy_term_load_multiple($tids);
+
+    $list = array();
+    foreach ($terms as $term) {
+      $list[$term->tid] = $term->name;
+    }
+    return $list;
+  }
+
+  return null;
+}
+
+/**
+ * Creates a list of all available entities of a certain type.
+ *
+ * @param $bundle The bundle (type) of the entities.
+ *
+ * @return array|null list of entities.
+ */
+function _webform_select_options_entities ($component, $flat, $filter, $arguments) {
+  // load courses
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $arguments[0])
+    ->propertyCondition('status', 1);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $nodes = node_load_multiple($nids);
+
+    $list = array();
+    foreach ($nodes as $node) {
+      $list[$node->nid] = $node->title;
+    }
+    return $list;
+  }
+
+  return null;
+}
 

@@ -20,7 +20,7 @@ $submission = webform_get_submission($node->nid, $sid);
 // get course node
 $webform_components = $node->webform['components'];
 foreach ($webform_components as $key => $data) {
-  if ($data['form_key'] == 'lehrgang') {
+  if ($data['form_key'] == 'course_nid') {
     $course_nid = $submission->data[$key]['value'][0];
     break;
   }
@@ -32,7 +32,7 @@ if ($course_nid) {
     $brochure = node_load($course->field_brochure[LANGUAGE_NONE][0]['target_id']);
     if ($brochure && !empty($brochure->field_file)) {
       $pdf = $brochure->field_file[LANGUAGE_NONE][0]['uri'];
-      hso_anmeldung_transfer_pdf($pdf, 'Kurs-Details.pdf', false);
+      hso_anmeldung_transfer_pdf($pdf, 'Kurs-Details.pdf', true);
     }
   }
 }

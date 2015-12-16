@@ -1403,7 +1403,7 @@ body.node-type-news .node.node-news .with_picture .block-hso-mods ul li a:hover 
 .node-webform form.webform-client-form .webform-container-inline input.form-text,
 .node-webform form.webform-client-form .webform-container-inline select.form-select {
   padding: 0 5px;
-  width: 400px;
+  width: 50%;
   height: 30px;
   font-family: 'Soho Gothic W01 Light', sans-serif;
   font-size: 14px;
@@ -1411,7 +1411,7 @@ body.node-type-news .node.node-news .with_picture .block-hso-mods ul li a:hover 
   border: 1px solid #dbdbdb;
 }
 .node-webform form.webform-client-form .webform-container-inline select.form-select {
-  width: 120px;
+  min-width: 120px;
 }
 .node-webform form.webform-client-form .form-actions .form-submit {
   margin: 10px 0;
@@ -4350,6 +4350,70 @@ body.excollege_section #block-views-videos-block-1 h2.block-title {
 #block-nodeblock-4581 .field-name-body a:active:hover {
   color: #a39b88;
   text-decoration: none;
+}
+/*
+ *  Prospekt-block component
+ * --------------------------------------------------*/
+#block-webform-client-block-12649 {
+  margin-bottom: 20px;
+}
+#block-webform-client-block-12649 h2.block-title {
+  padding: 15px 15px 15px 40px;
+  height: 20px;
+  font-size: 17px;
+  color: #fff;
+  line-height: 20px;
+}
+#block-webform-client-block-12649 #webform-client-form-12649 {
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  border-top-color: #fff;
+}
+#block-webform-client-block-12649 #webform-client-form-12649 .webform-component > label {
+  display: inline-block;
+  margin-right: 0;
+  width: 80px;
+}
+#block-webform-client-block-12649 #webform-client-form-12649 .webform-component input.form-text {
+  width: 60%;
+}
+#block-webform-client-block-12649 #webform-client-form-12649 .form-actions .form-submit {
+  margin: 10px 0;
+  padding: 0 20px;
+  height: 35px;
+  font-family: 'Soho Gothic W01 Regular', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #fff;
+  background: #e40421;
+  border: none;
+}
+body.kvcollege_section #block-webform-client-block-12649 h2.block-title {
+  background: #94ba40 no-repeat 0 0;
+  padding-left: 20px;
+}
+body.kvcollege_section #block-webform-client-block-12649 #webform-client-form-12649 .form-actions .form-submit {
+  background-color: #94ba40;
+}
+body.hscollege_section #block-webform-client-block-12649 h2.block-title {
+  background: #e77431 no-repeat 0 0;
+  padding-left: 20px;
+}
+body.hscollege_section #block-webform-client-block-12649 #webform-client-form-12649 .form-actions .form-submit {
+  background-color: #e77431;
+}
+body.kscollege_section #block-webform-client-block-12649 h2.block-title {
+  background: #78729e no-repeat 0 0;
+  padding-left: 20px;
+}
+body.kscollege_section #block-webform-client-block-12649 #webform-client-form-12649 .form-actions .form-submit {
+  background-color: #78729e;
+}
+body.excollege_section #block-webform-client-block-12649 h2.block-title {
+  background: #b1a896 no-repeat 0 0;
+  padding-left: 20px;
+}
+body.excollege_section #block-webform-client-block-12649 #webform-client-form-12649 .form-actions .form-submit {
+  background-color: #b1a896;
 }
 /*
  *  Footer block components
