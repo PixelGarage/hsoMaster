@@ -10,7 +10,7 @@ function hso_theme_alpha_preprocess_html(&$vars) {
 	);
 	drupal_add_html_head($meta, 'alpha-viewport');
   drupal_add_js('//platform.twitter.com/widgets.js', 'external');
-  drupal_add_css('http://fast.fonts.com/cssapi/8d596996-b655-44b0-bd53-092653f91ba8.css', 'external');
+  drupal_add_css('https://fast.fonts.com/cssapi/8d596996-b655-44b0-bd53-092653f91ba8.css', 'external');
 
   //
   // add adwebster pixel on kvcollege and handelsschule
