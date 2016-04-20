@@ -17,7 +17,7 @@ class addressfield_phone_handler_field_address_phone_nr extends views_handler_fi
   public function option_definition() {
     $options = parent::option_definition();
 
-    $options['selected_phone_type'] = array('default' => 3, 'bool' => TRUE);
+    $options['selected_phone_type'] = array('default' => 3);
 
     return $options;
   }
@@ -46,23 +46,25 @@ class addressfield_phone_handler_field_address_phone_nr extends views_handler_fi
    * Render the addresfields phone field.
    */
   public function render($values) {
-    $phoneNrs = unserialize($this->get_value($values));
-    $phone_number = $phoneNrs['phone_number'];
-    $phone_number_extension = $phoneNrs['phone_number_extension'];
-    $mobile_number = $phoneNrs['mobile_number'];
-    $fax_number = $phoneNrs['fax_number'];
+    $phoneNrs = unserialize($this->get_value($values))
+      + array(
+        'phone_number' => '',
+        'phone_number_extension' => '',
+        'mobile_number' => '',
+        'fax_number' => '',
+      );
     switch ($this->options['selected_phone_type']) {
       case 1:
-        return $phone_number;
+        return $phoneNrs['phone_number'];
         break;
       case 2:
-        return $phone_number_extension;
+        return $phoneNrs['phone_number_extension'];
         break;
       case 3:
-        return $mobile_number;
+        return $phoneNrs['mobile_number'];
         break;
       case 4:
-        return $fax_number;
+        return $phoneNrs['fax_number'];
         break;
     }
   }
